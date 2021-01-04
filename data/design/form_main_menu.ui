@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
-    <height>385</height>
+    <width>596</width>
+    <height>378</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -193,26 +193,6 @@
      <string>Отчёт 1</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>160</y>
-      <width>200</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-      <italic>false</italic>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="text">
-     <string>действие 6</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_7">
     <property name="geometry">
      <rect>
@@ -233,7 +213,7 @@
      <string>действие 7</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="report_3">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -244,13 +224,13 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
     </property>
     <property name="text">
-     <string>действие 8</string>
+     <string>Отчёт за год</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_9">
@@ -293,14 +273,34 @@
      <string>действие 10</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="report_2">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>160</y>
+      <width>200</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <italic>false</italic>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>Отчёт за месяц</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>598</width>
-     <height>21</height>
+     <width>596</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>

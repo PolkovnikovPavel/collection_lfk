@@ -7,7 +7,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from data.design.report_1 import Ui_MainWindow as Ui_Report1
 
 
-def set_aell(sheet, x, y, value, style, alignment=1):
+def set_cell(sheet, x, y, value, style, alignment=1):
     cell = sheet._get_cell(x, y)
     cell.value = value
     cell.font = style
@@ -48,9 +48,17 @@ class ReportMenu1(QMainWindow, Ui_Report1):
         if not file_name:
             return
 
-        book = openpyxl.Workbook()
+        try:
+            book = openpyxl.load_workbook(file_name)
+            for sheet_name in book.sheetnames:
+                if sheet_name == "отчёт за день":
+                    sheet = book.get_sheet_by_name(sheet_name)
+                    book.remove_sheet(sheet)
+            sheet = book.create_sheet()
+        except Exception:
+            book = openpyxl.Workbook()
+            sheet = book.active
 
-        sheet = book.active
         sheet.title = "отчёт за день"
 
         bold_big_style = Font(size="14", bold=True)
@@ -58,22 +66,22 @@ class ReportMenu1(QMainWindow, Ui_Report1):
         style = Font(size="11")
 
         # The data
-        set_aell(sheet, 1, 1, 'Журнал работы с пациентами', bold_big_style)
+        set_cell(sheet, 1, 1, 'Журнал работы с пациентами', bold_big_style)
 
         choice_date = get_date_calendar(self.choice_date)
-        set_aell(sheet, 1, 7, choice_date, bold_big_style)
+        set_cell(sheet, 1, 7, choice_date, bold_big_style)
 
-        set_aell(sheet, 4, 1, '№', bold_style)
-        set_aell(sheet, 4, 2, 'ФИО, год рождения, диагноз', bold_style)
-        set_aell(sheet, 4, 3, '№ истории', bold_style)
-        set_aell(sheet, 4, 4, 'взр./реб.', bold_style)
-        set_aell(sheet, 4, 5, 'Отдел', bold_style)
-        set_aell(sheet, 4, 6, 'место', bold_style)
-        set_aell(sheet, 4, 7, 'исп.', bold_style)
-        set_aell(sheet, 4, 8, 'место', bold_style)
-        set_aell(sheet, 4, 9, 'исп.', bold_style)
-        set_aell(sheet, 4, 10, 'место', bold_style)
-        set_aell(sheet, 4, 11, 'исп.', bold_style)
+        set_cell(sheet, 4, 1, '№', bold_style)
+        set_cell(sheet, 4, 2, 'ФИО, год рождения, диагноз', bold_style)
+        set_cell(sheet, 4, 3, '№ истории', bold_style)
+        set_cell(sheet, 4, 4, 'взр./реб.', bold_style)
+        set_cell(sheet, 4, 5, 'Отдел', bold_style)
+        set_cell(sheet, 4, 6, 'место', bold_style)
+        set_cell(sheet, 4, 7, 'исп.', bold_style)
+        set_cell(sheet, 4, 8, 'место', bold_style)
+        set_cell(sheet, 4, 9, 'исп.', bold_style)
+        set_cell(sheet, 4, 10, 'место', bold_style)
+        set_cell(sheet, 4, 11, 'исп.', bold_style)
 
         num_str = 5
 
@@ -138,31 +146,31 @@ class ReportMenu1(QMainWindow, Ui_Report1):
             data.append(stitch)
 
         for i in range(len(all_records)):
-            set_aell(sheet, num_str, 1, data[i][0], style)
-            set_aell(sheet, num_str, 2, data[i][1], style)
-            set_aell(sheet, num_str, 3, data[i][2], style)
-            set_aell(sheet, num_str, 4, data[i][3], style)
-            set_aell(sheet, num_str, 5, data[i][4], style)
-            set_aell(sheet, num_str, 6, data[i][5], style)
-            set_aell(sheet, num_str, 7, data[i][6], style)
-            set_aell(sheet, num_str, 8, data[i][7], style)
-            set_aell(sheet, num_str, 9, data[i][8], style)
-            set_aell(sheet, num_str, 10, data[i][9], style)
-            set_aell(sheet, num_str, 11, data[i][10], style)
+            set_cell(sheet, num_str, 1, data[i][0], style)
+            set_cell(sheet, num_str, 2, data[i][1], style)
+            set_cell(sheet, num_str, 3, data[i][2], style)
+            set_cell(sheet, num_str, 4, data[i][3], style)
+            set_cell(sheet, num_str, 5, data[i][4], style)
+            set_cell(sheet, num_str, 6, data[i][5], style)
+            set_cell(sheet, num_str, 7, data[i][6], style)
+            set_cell(sheet, num_str, 8, data[i][7], style)
+            set_cell(sheet, num_str, 9, data[i][8], style)
+            set_cell(sheet, num_str, 10, data[i][9], style)
+            set_cell(sheet, num_str, 11, data[i][10], style)
             num_str += 1
 
-        set_aell(sheet, num_str + 2, 1, f'Всего процедур за {choice_date}:', bold_style)
-        set_aell(sheet, num_str + 2, 3, count_of_records, bold_style)
-        set_aell(sheet, num_str + 2, 4, 'Всего пациентов :', bold_style)
-        set_aell(sheet, num_str + 2, 5, len(count_of_patients), bold_style)
+        set_cell(sheet, num_str + 2, 1, f'Всего процедур за {choice_date}:', bold_style)
+        set_cell(sheet, num_str + 2, 3, count_of_records, bold_style)
+        set_cell(sheet, num_str + 2, 4, 'Всего пациентов :', bold_style)
+        set_cell(sheet, num_str + 2, 5, len(count_of_patients), bold_style)
 
         key_places = list(all_places.keys())
         key_places.sort()
         num_str += 3
         for name_place in key_places:
             points = '…' * (50 - len(name_place))
-            set_aell(sheet, num_str, 1, name_place + points, style)
-            set_aell(sheet, num_str, 3, all_places[name_place], bold_style)
+            set_cell(sheet, num_str, 1, name_place + points, style)
+            set_cell(sheet, num_str, 3, all_places[name_place], bold_style)
             num_str += 1
 
 
@@ -179,10 +187,14 @@ class ReportMenu1(QMainWindow, Ui_Report1):
         sheet.column_dimensions['E'].width = 24
 
         sheet.sheet_properties.pageSetUpPr.fitToPage = True
+        sheet.page_setup.fitToHeight = False
         sheet.orientation = 'landscape'
         sheet.set_printer_settings(9, 'landscape')
 
-        book.save(file_name)
+        try:
+            book.save(file_name)
+        except PermissionError:
+            pass
         self.close()
 
     def open_main_menu(self):

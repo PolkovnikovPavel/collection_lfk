@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(442, 469)
+        MainWindow.resize(440, 462)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.button.setObjectName("button")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 442, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 440, 18))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -57,5 +57,5 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Карточка на дату"))
         self.label.setText(_translate("MainWindow", "Карточка на дату"))
-        self.label_2.setText(_translate("MainWindow", "Выберете дату"))
+        self.label_2.setText(_translate("MainWindow", "Выберите дату"))
         self.button.setText(_translate("MainWindow", "Создать отчёт"))

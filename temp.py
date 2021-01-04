@@ -1,13 +1,21 @@
-import openpyxl
+num = 78
+x = 0
 
-book = openpyxl.Workbook()
+while True:
+    num += 1
+    x = num
 
-sheet = book.active
-sheet.title = "sheet"
+    L = x
+    M = 65
+    if L % 2 == 0:
+        M = 52
+    while L != M:
+        if L > M:
+            L = L - M
+        else:
+            M = M - L
 
-# The data
-cell = sheet._get_cell(1, 1).value = 'syidbuon'
-sheet.column_dimensions['A'].width = 60
-
-
-book.save(filename = "test.xlsx")
+    if M == 26:
+        print(num)
+        print(M)
+        break
