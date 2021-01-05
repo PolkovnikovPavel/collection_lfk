@@ -451,7 +451,7 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
                                                 'Введите короткое имя')
             if ok:
                 inquiry = f"""INSERT INTO accounts (name, password, is_admin, short_name) 
-                                            VALUES ('{text}', '{password}', 0, {short_name})"""
+                                            VALUES ('{text}', '{password}', 0, '{short_name}')"""
                 self.cur.execute(inquiry).fetchall()
                 self.con.commit()
                 self.create_new_user()

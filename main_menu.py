@@ -9,6 +9,7 @@ from adding_procedure import AddingProcedures
 from history import HistoryMenu
 from report_1 import ReportMenu1
 from report_2 import ReportMenu2
+from report_3 import ReportMenu3
 
 
 def get_date_calendar(calendar):
@@ -38,6 +39,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.history_button.clicked.connect(self.open_history)
         self.report_1.clicked.connect(self.open_report_1)
         self.report_2.clicked.connect(self.open_report_2)
+        self.report_3.clicked.connect(self.open_report_3)
         self.button_add_procedure.clicked.connect(self.open_adding_procedure)
         self.name.setText(self.ac_name)
         self.con = sqlite3.connect(db_name)
@@ -81,6 +83,11 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
 
     def open_report_2(self):
         self.report_window = ReportMenu2(self, self.ac_name, self.db_name)
+        # self.close()
+        self.report_window.show()
+
+    def open_report_3(self):
+        self.report_window = ReportMenu3(self, self.ac_name, self.db_name)
         # self.close()
         self.report_window.show()
 

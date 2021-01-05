@@ -147,7 +147,7 @@ class Ui_MainWindow(object):
         self.button_add_procedure.setText(_translate("MainWindow", "Добавить процедуры"))
         self.delete_patient.setText(_translate("MainWindow", "Выписать пациента"))
         self.pushButton_4.setText(_translate("MainWindow", "действие 4"))
-        self.report_1.setText(_translate("MainWindow", "Отчёт 1"))
+        self.report_1.setText(_translate("MainWindow", "Отчёт на один день"))
         self.pushButton_7.setText(_translate("MainWindow", "действие 7"))
         self.report_3.setText(_translate("MainWindow", "Отчёт за год"))
         self.pushButton_9.setText(_translate("MainWindow", "действие 9"))

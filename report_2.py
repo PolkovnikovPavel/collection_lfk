@@ -1,5 +1,4 @@
 import os, sqlite3, openpyxl
-import xlwt
 from openpyxl.styles import Font, Alignment
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -131,7 +130,7 @@ class ReportMenu2(QMainWindow, Ui_Report2):
             WHERE records.is_deleted = 0 and records.patient_id = {id_people}"""
             all_records = self.cur.execute(inquiry).fetchall()
             if all(map(lambda x:
-                       get_num_from_date(x[1]) > get_num_from_date(f'01.{self.selected_month[0]}.{self.selected_month[1]}'),
+                       get_num_from_date(x[1]) >= get_num_from_date(f'01.{self.selected_month[0]}.{self.selected_month[1]}'),
                        all_records)):
                 right_id_people.append(id_people)
 
@@ -234,13 +233,13 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
 
         num_str -= len(all_places)
         for doctor in all_doctors:
-            num_str += 1
             if doctors_by_places[doctor[0]] != 0:
+                num_str += 1
                 set_cell(sheet, num_str, 6, doctor[0], style)
                 set_cell(sheet, num_str, 11, doctors_by_places[doctor[0]], style)
         for doctor in all_doctors_del:
-            num_str += 1
             if doctors_by_places[doctor[0]] != 0:
+                num_str += 1
                 set_cell(sheet, num_str, 6, doctor[0], pale_style)
                 set_cell(sheet, num_str, 11, doctors_by_places[doctor[0]], pale_style)
 

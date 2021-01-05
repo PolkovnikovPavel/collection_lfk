@@ -190,7 +190,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Отчёт 1</string>
+     <string>Отчёт на один день</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_7">

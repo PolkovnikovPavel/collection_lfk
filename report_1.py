@@ -1,5 +1,4 @@
 import os, sqlite3, openpyxl
-import xlwt
 from openpyxl.styles import Font, Alignment
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
