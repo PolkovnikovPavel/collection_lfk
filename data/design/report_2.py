@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'data/design/report_1.ui'
+# Form implementation generated from reading ui file 'data/design/report_2.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -14,21 +14,25 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(440, 462)
+        MainWindow.resize(394, 292)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(120, 0, 241, 31))
+        self.label.setGeometry(QtCore.QRect(100, 10, 190, 31))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.choice_date = QtWidgets.QCalendarWidget(self.centralwidget)
-        self.choice_date.setGeometry(QtCore.QRect(20, 120, 410, 301))
+        self.name_month = QtWidgets.QComboBox(self.centralwidget)
+        self.name_month.setGeometry(QtCore.QRect(20, 110, 350, 30))
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.choice_date.setFont(font)
-        self.choice_date.setObjectName("choice_date")
+        self.name_month.setFont(font)
+        self.name_month.setCurrentText("")
+        self.name_month.setMaxVisibleItems(20)
+        self.name_month.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
+        self.name_month.setIconSize(QtCore.QSize(16, 16))
+        self.name_month.setObjectName("name_month")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(20, 70, 181, 31))
         font = QtGui.QFont()
@@ -36,14 +40,14 @@ class Ui_MainWindow(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.button = QtWidgets.QPushButton(self.centralwidget)
-        self.button.setGeometry(QtCore.QRect(250, 60, 170, 40))
+        self.button.setGeometry(QtCore.QRect(110, 180, 170, 40))
         font = QtGui.QFont()
         font.setPointSize(17)
         self.button.setFont(font)
         self.button.setObjectName("button")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 440, 18))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 394, 18))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -55,7 +59,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Карточка на дату"))
-        self.label.setText(_translate("MainWindow", "Карточка на дату"))
-        self.label_2.setText(_translate("MainWindow", "Выберите дату"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "карточка на месяц"))
+        self.label_2.setText(_translate("MainWindow", "Выберите месяц"))
         self.button.setText(_translate("MainWindow", "Создать отчёт"))

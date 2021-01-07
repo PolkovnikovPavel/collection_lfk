@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>462</height>
+    <width>394</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Карточка на дату</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>0</y>
-      <width>241</width>
+      <x>100</x>
+      <y>10</y>
+      <width>190</width>
       <height>31</height>
      </rect>
     </property>
@@ -29,22 +29,37 @@
      </font>
     </property>
     <property name="text">
-     <string>Карточка на дату</string>
+     <string>карточка на месяц</string>
     </property>
    </widget>
-   <widget class="QCalendarWidget" name="choice_date">
+   <widget class="QComboBox" name="name_month">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>120</y>
-      <width>410</width>
-      <height>301</height>
+      <y>110</y>
+      <width>350</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>15</pointsize>
      </font>
+    </property>
+    <property name="currentText">
+     <string/>
+    </property>
+    <property name="maxVisibleItems">
+     <number>20</number>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -62,14 +77,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Выберите дату</string>
+     <string>Выберите месяц</string>
     </property>
    </widget>
    <widget class="QPushButton" name="button">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>60</y>
+      <x>110</x>
+      <y>180</y>
       <width>170</width>
       <height>40</height>
      </rect>
@@ -89,7 +104,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>440</width>
+     <width>394</width>
      <height>18</height>
     </rect>
    </property>

@@ -199,17 +199,11 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
             doctors_by_places[record[2]] += 1
 
 
-
-
-
         set_cell(sheet, num_str + 2, 1, 'По процедурам', bold_style)
-        set_cell(sheet, num_str + 4, 2, 'Места', bold_style)
-        set_cell(sheet, num_str + 5, 1, 'Всего', style)
-        set_cell(sheet, num_str + 5, 4, len(all_records), style)
-        set_cell(sheet, num_str + 5, 6, 'Всего', style)
-        set_cell(sheet, num_str + 5, 11, len(all_records), style)
-
+        set_cell(sheet, num_str + 4, 2, 'Места проведения', bold_style)
         set_cell(sheet, num_str + 4, 7, 'Исполнители', bold_style)
+        set_cell(sheet, num_str + 2, 3, 'всего:', style)
+        set_cell(sheet, num_str + 2, 4, len(all_records), style)
 
         num_str += 5
         if records_by_places['удал. места'] != 0:

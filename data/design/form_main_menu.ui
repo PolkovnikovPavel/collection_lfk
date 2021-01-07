@@ -19,13 +19,13 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>561</width>
+      <width>580</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>20</pointsize>
      </font>
     </property>
     <property name="text">
@@ -43,7 +43,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="text">
@@ -61,7 +61,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -81,7 +81,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="text">
@@ -102,7 +102,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="mouseTracking">
@@ -124,7 +124,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -144,7 +144,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -184,7 +184,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -193,7 +193,7 @@
      <string>Отчёт на один день</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="report_4">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -204,13 +204,13 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
     </property>
     <property name="text">
-     <string>действие 7</string>
+     <string>отчёт на период дней</string>
     </property>
    </widget>
    <widget class="QPushButton" name="report_3">
@@ -224,7 +224,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -284,7 +284,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
