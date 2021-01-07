@@ -113,7 +113,7 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         font.setPointSize(15)
         _translate = QtCore.QCoreApplication.translate
 
-        inquiry = f"""SELECT DISTINCT name FROM places"""
+        inquiry = f"""SELECT DISTINCT name, price, short_name FROM places"""
         names = self.cur.execute(inquiry).fetchall()
         self.all_places = []
         for name in names:
@@ -123,11 +123,13 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
             self.main_table.removeRow(0)
 
         self.main_table.setRowCount(len(names))
-        self.main_table.setColumnCount(3)
+        self.main_table.setColumnCount(5)
         self.main_table.setColumnWidth(0, 120)
         self.main_table.setColumnWidth(1, 105)
         self.main_table.setColumnWidth(2, 240)
-        self.main_table.setHorizontalHeaderLabels(['', '', 'название'])
+        self.main_table.setColumnWidth(3, 100)
+        self.main_table.setColumnWidth(4, 10)
+        self.main_table.setHorizontalHeaderLabels(['', '', 'название', 'сокр. имя', 'цена, ед.'])
 
         for i in range(len(names)):
             button_1 = MyPushButton(self.centralwidget)
@@ -158,9 +160,17 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
             name = QtWidgets.QLineEdit(str(names[i][0]))
             name.setFont(font)
 
+            short_name = QtWidgets.QLineEdit(str(names[i][2]))
+            short_name.setFont(font)
+
+            price = QtWidgets.QLineEdit(str(names[i][1]))
+            price.setFont(font)
+
             self.main_table.setCellWidget(i, 0, button_1)
             self.main_table.setCellWidget(i, 1, button_2)
             self.main_table.setCellWidget(i, 2, name)
+            self.main_table.setCellWidget(i, 3, short_name)
+            self.main_table.setCellWidget(i, 4, price)
 
         self.button_add.clicked.disconnect()
         self.button_add.clicked.connect(self.add_new_place)
@@ -306,9 +316,16 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
 
     def save_place(self):
         name = self.sender().args[0]
+        price = self.main_table.cellWidget(self.sender().args[1], 4).text()
+        short_name = self.main_table.cellWidget(self.sender().args[1], 3).text()
+        try:
+            price = float('.'.join(price.split(',')))
+        except Exception:
+            self.create_places()
+            return
         call = self.main_table.cellWidget(self.sender().args[1], 2)
         inquiry = f"""UPDATE places
-                            SET name = '{call.text()}'
+                            SET name = '{call.text()}', price = {price}, short_name = '{short_name}'
                                 WHERE name = '{name}'"""
 
         self.cur.execute(inquiry)
