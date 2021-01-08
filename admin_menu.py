@@ -407,6 +407,7 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
 
     def save_user(self):
         call_name = self.main_table.cellWidget(self.sender().args[1], 2)
+        call_short_name = self.main_table.cellWidget(self.sender().args[1], 3)
         call_pass = self.main_table.cellWidget(self.sender().args[1], 4)
 
         if call_name.text() in list(filter(lambda x: x != call_name.text(), self.all_users)):
@@ -414,7 +415,7 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
             return
 
         inquiry = f"""UPDATE accounts
-                        SET name = '{call_name.text()}', password = '{call_pass.text()}', short_name = 'aaa'
+                        SET name = '{call_name.text()}', password = '{call_pass.text()}', short_name = '{call_short_name.text()}'
                             WHERE name = '{self.sender().args[0]}'"""
         print(inquiry)
         self.cur.execute(inquiry)

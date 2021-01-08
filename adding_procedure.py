@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 #from PyQt5 import AlignHCenter
 
 from data.design.form_adding_procedures import Ui_MainWindow as Ui_FormAddingProcedures
-from adding_one_procedure import AddingProcedureOne
+from memo import MemoMenu
 
 
 class MyPushButton(QtWidgets.QPushButton):
@@ -104,6 +104,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
         self.evaluation_3 = 5
         self.search.setFocus()
         self.exit_button.clicked.connect(self.open_main_menu)
+        self.description.clicked.connect(self.open_memo)
         self.add_new_day_button.clicked.connect(self.add_new_day)
         self.name_patient.activated.connect(self.create_tabl)
         self.main_table.cellPressed[int, int].connect(self.clicked_on_table)
@@ -280,6 +281,25 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             self.main_table.setCellWidget(i, 6, doctor_1)
             self.main_table.setCellWidget(i, 8, doctor_2)
             self.main_table.setCellWidget(i, 10, doctor_3)
+
+        inquiry = f"""SELECT DISTINCT memo FROM patients WHERE id = {patient_id}"""
+        memo_of_patient = self.cur.execute(inquiry).fetchone()
+        description = memo_of_patient[0].split()
+        rez_description = ''
+        for word in description:
+            if len(rez_description + word) > 42:
+                if len(word) > 3:
+                    rez_description += word[:3] + '...'
+                else:
+                    rez_description += word + '...'
+                break
+            else:
+                rez_description += word + ' '
+        rez_description += '\n(нажмите, чтоб посмотреть полностью)'
+
+        self.description.setText(rez_description)
+
+
 
     def evaluation_selection(self):
         grin_radio = [(self.radio_1_1, 1),
@@ -503,3 +523,11 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
     def open_main_menu(self):
         self.close()  # закрывает это окно
         self.main_menu.show()
+
+    def open_memo(self):
+        id_patient = 0
+        for patient in self.all_patients:
+            if patient[0] == self.name_patient.currentText():
+                id_patient = patient[1]
+        self.memo_window = MemoMenu(self, self.ac_name, self.db_name, id_patient)
+        self.memo_window.show()

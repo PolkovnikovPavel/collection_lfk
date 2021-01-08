@@ -109,7 +109,7 @@ class ReportMenu2(QMainWindow, Ui_Report2):
         inquiry = f"""SELECT DISTINCT name FROM departments WHERE is_deleted = 0"""
         all_departments = self.cur.execute(inquiry).fetchall()
 
-        inquiry = f"""SELECT DISTINCT name FROM places WHERE is_deleted = 0"""
+        inquiry = f"""SELECT DISTINCT name, price FROM places WHERE is_deleted = 0"""
         all_places = self.cur.execute(inquiry).fetchall()
 
         # ---------------------------------------катигории людей и их отделения
@@ -202,7 +202,6 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
         for doctor in all_doctors_del:
             doctors_by_places[doctor[0]] = 0
 
-
         for record in all_records:
             if record[1] not in records_by_places:
                 records_by_places['удал. места'] += 1
@@ -210,33 +209,43 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
                 records_by_places[record[1]] += 1
             doctors_by_places[record[2]] += 1
 
-
         set_cell(sheet, num_str + 2, 1, 'По процедурам', bold_style)
-        set_cell(sheet, num_str + 4, 2, 'Места проведения', bold_style)
-        set_cell(sheet, num_str + 4, 7, 'Исполнители', bold_style)
-        set_cell(sheet, num_str + 2, 3, 'всего:', style)
+        set_cell(sheet, num_str + 4, 1, '        Способ реабилитации', bold_style)
+        set_cell(sheet, num_str + 4, 9, 'Исполнители', bold_style)
+        set_cell(sheet, num_str + 4, 5, '      единицы', bold_style)
+        set_cell(sheet, num_str + 2, 3, 'всего:', style, alignment=3)
         set_cell(sheet, num_str + 2, 4, len(all_records), style)
 
         num_str += 4
+        sum_price = 0
         if records_by_places['удал. места'] != 0:
             all_places.append(['удал. места'])
         for place in all_places:
             num_str += 1
             set_cell(sheet, num_str, 1, place[0], style)
             set_cell(sheet, num_str, 4, records_by_places[place[0]], style)
+            if place[0] != 'удал. места':
+                set_cell(sheet, num_str, 5, f'* {place[1]} =', style)
+                set_cell(sheet, num_str, 6, place[1] * records_by_places[place[0]], style)
+                sum_price += place[1] * records_by_places[place[0]]
+        set_cell(sheet, num_str + 1, 5, 'всего:', style)
+        set_cell(sheet, num_str + 1, 6, sum_price, style)
 
         num_str -= len(all_places)
         for doctor in all_doctors:
             if doctors_by_places[doctor[0]] != 0:
                 num_str += 1
-                set_cell(sheet, num_str, 6, doctor[0], style)
-                set_cell(sheet, num_str, 11, doctors_by_places[doctor[0]], style)
+                set_cell(sheet, num_str, 8, doctor[0], style)
+                set_cell(sheet, num_str, 13, doctors_by_places[doctor[0]], style)
+
         for doctor in all_doctors_del:
             if doctors_by_places[doctor[0]] != 0:
                 num_str += 1
-                set_cell(sheet, num_str, 6, doctor[0], pale_style)
-                set_cell(sheet, num_str, 11, doctors_by_places[doctor[0]], pale_style)
+                set_cell(sheet, num_str, 8, doctor[0], pale_style)
+                set_cell(sheet, num_str, 13, doctors_by_places[doctor[0]], pale_style)
 
+        sheet.column_dimensions['D'].width = 5.5
+        sheet.column_dimensions['E'].width = 6
 
         sheet.sheet_properties.pageSetUpPr.fitToPage = True
         sheet.orientation = 'landscape'

@@ -253,7 +253,7 @@
      <string>действие 9</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="report_5">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -264,13 +264,13 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>16</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
     </property>
     <property name="text">
-     <string>действие 10</string>
+     <string>сборный отчёт</string>
     </property>
    </widget>
    <widget class="QPushButton" name="report_2">
