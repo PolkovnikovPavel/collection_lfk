@@ -417,7 +417,6 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         inquiry = f"""UPDATE accounts
                         SET name = '{call_name.text()}', password = '{call_pass.text()}', short_name = '{call_short_name.text()}'
                             WHERE name = '{self.sender().args[0]}'"""
-        print(inquiry)
         self.cur.execute(inquiry)
         self.con.commit()
         self.create_new_user()
@@ -426,7 +425,6 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         text = self.new_name.text()
         if len(self.new_name.text().split()) == 0 or text in self.all_places:
             return
-        print(self.new_name.text())
 
         inquiry = f"""INSERT INTO places (name) 
                             VALUES ('{self.new_name.text()}')"""

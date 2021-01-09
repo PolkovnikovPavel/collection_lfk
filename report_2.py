@@ -115,7 +115,7 @@ class ReportMenu2(QMainWindow, Ui_Report2):
         # ---------------------------------------катигории людей и их отделения
         inquiry = f"""SELECT records.id, patients.id FROM records, patients
                         WHERE records.is_deleted = 0 and date LIKE '___{self.selected_month[0]}_____'
-                                        and records.patient_id = patients.id"""
+                                        and records.patient_id = patients.id and patients.is_deleted = 0"""
         all_records = self.cur.execute(inquiry).fetchall()
 
         all_people_in_month = []
@@ -146,7 +146,7 @@ class ReportMenu2(QMainWindow, Ui_Report2):
 
         for id_people in right_id_people:
             inquiry = f"""SELECT patients.id, departments.name, categories.name FROM patients, departments, categories
-WHERE patients.id = {id_people} and patients.category = categories.id and patients.department = departments.id"""
+WHERE patients.id = {id_people} and patients.category = categories.id and patients.department = departments.id and patients.is_deleted = 0"""
             department_categori = self.cur.execute(inquiry).fetchone()
             if department_categori[1] not in department_by_people:
                 department_by_people['удал. отделения'] += 1
@@ -179,11 +179,11 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
 
         # ------------------------------------------------------- По процедурам
 
-        inquiry = f"""SELECT records.id, places.name, accounts.name FROM records, lessons, places, accounts
+        inquiry = f"""SELECT records.id, places.name, accounts.name FROM records, lessons, places, accounts, patients
             WHERE records.date LIKE '___{self.selected_month[0]}_____' and (lessons.id = records.lesson_id_1 or 
                                                                             lessons.id = records.lesson_id_2 or
                                                                             lessons.id = records.lesson_id_3) and
-            lessons.id_plase = places.id and lessons.id_doctor = accounts.id and records.is_deleted = 0"""
+            lessons.id_plase = places.id and lessons.id_doctor = accounts.id and records.is_deleted = 0 and patients.is_deleted = 0 and patients.id = records.patient_id"""
         all_records = self.cur.execute(inquiry).fetchall()
 
         records_by_places = {}

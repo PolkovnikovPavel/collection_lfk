@@ -117,7 +117,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
 
         inquiry = f"""SELECT DISTINCT full_name, date_of_birth, story_number, id, my_story_number
                                             FROM patients
-                                    WHERE is_discharge = 0"""
+                                    WHERE is_discharge = 0 and is_deleted = 0"""
         all_patients = self.cur.execute(inquiry).fetchall()
         all_patients.sort(key=lambda x: str(x[0]))
         self.all_patients = []
@@ -130,11 +130,12 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
 
 
     def add_new_day(self):
-        patient_id = 1
+        patient_id = -1
         for text, id in self.all_patients:
             if text == self.name_patient.currentText():
                 patient_id = id
-
+        if patient_id == -1:
+            return
         date = get_date_calendar(self.choice_date)
 
 
@@ -155,7 +156,6 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
         inquiry = f"""SELECT DISTINCT id FROM lessons"""
         all_lessons = self.cur.execute(inquiry).fetchall()[-3:]
         all_lessons = list(map(lambda x: x[0], all_lessons))
-        print(all_lessons)
 
 
         inquiry = f"""INSERT INTO records (patient_id, date, 
@@ -172,10 +172,13 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         font.setPointSize(15)
         _translate = QtCore.QCoreApplication.translate
 
-        patient_id = 1
+        patient_id = -1
         for text, id in self.all_patients:
             if text == self.name_patient.currentText():
                 patient_id = id
+        if patient_id == -1:
+            self.main_table.setRowCount(0)
+            return
         inquiry = f"""SELECT DISTINCT id, date, number_of_exercises, grade_1, 
                     grade_2, grade_3, is_deleted, lesson_id_1, lesson_id_2, lesson_id_3
                                                             FROM records
@@ -525,9 +528,11 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.main_menu.show()
 
     def open_memo(self):
-        id_patient = 0
+        id_patient = -1
         for patient in self.all_patients:
             if patient[0] == self.name_patient.currentText():
                 id_patient = patient[1]
+        if id_patient == -1:
+            return
         self.memo_window = MemoMenu(self, self.ac_name, self.db_name, id_patient)
         self.memo_window.show()

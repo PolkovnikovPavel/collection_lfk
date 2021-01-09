@@ -55,8 +55,9 @@ def create_report_on_day(sheet, cur, choice_date, start_num_str):
     num_str = start_num_str + 4
 
     inquiry = f"""SELECT DISTINCT patient_id, lesson_id_1, lesson_id_2, lesson_id_3
-                                                            FROM records
-                            WHERE date = '{choice_date}' AND is_deleted = 0"""
+                                                            FROM records, patients
+                            WHERE date = '{choice_date}' AND records.is_deleted = 0 
+                            and patients.is_deleted = 0 and patients.id = records.patient_id"""
     all_records = cur.execute(inquiry).fetchall()
 
     count_of_patients = {}

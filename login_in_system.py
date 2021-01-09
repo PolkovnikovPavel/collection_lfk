@@ -60,7 +60,7 @@ class LoggingInSystem(QMainWindow, Ui_FormAccountLogin):
                 self.is_db = True
                 self.db_name = db_name
                 for name in all_names:  # добавление вариантов выбора
-                    self.list_names.addItem(name[0])
+                    self.list_names.addItem(str(name[0]))
             except Exception:
                 db_name == 'nf'
 

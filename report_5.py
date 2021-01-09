@@ -70,7 +70,7 @@ def create_report(self):
 
     inquiry = f"""SELECT DISTINCT full_name, diagnosis, date_of_birth, story_number, category, department, my_story_number
                                                         FROM patients
-                                                    WHERE is_discharge = 1"""
+                                                    WHERE is_discharge = 1 and is_deleted = 0"""
     all_patients = self.cur.execute(inquiry).fetchall()
 
     for symbol_1 in abc:

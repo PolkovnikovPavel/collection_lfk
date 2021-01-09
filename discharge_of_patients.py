@@ -34,7 +34,7 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
         self.all_patients = []
         inquiry = f"""SELECT DISTINCT full_name, date_of_birth, story_number, id, my_story_number
                                                     FROM patients
-                                            WHERE is_discharge = 0"""
+                                            WHERE is_discharge = 0 and is_deleted = 0"""
         all_patients = self.cur.execute(inquiry).fetchall()
         self.all_patients = []
         for patient in all_patients:
@@ -63,8 +63,8 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
         now = datetime.datetime.now()
         time = f"{now.day}.{now.month}.{now.year}  {now.hour}:{now.minute}"
 
-        inquiry = f"""INSERT INTO logs (user_id, description, is_cancel_button, date) 
-        VALUES ({user_id[0]}, 'discharge;{patient[1]}', 1, '{time}')"""
+        inquiry = f"""INSERT INTO logs (user_id, description, date) 
+        VALUES ({user_id[0]}, 'discharge;{patient[1]}', '{time}')"""
         self.cur.execute(inquiry).fetchall()
         self.con.commit()
 
