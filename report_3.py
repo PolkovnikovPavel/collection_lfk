@@ -201,7 +201,7 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
         set_cell(sheet, num_str + 2, 1, 'По процедурам', bold_style)
         set_cell(sheet, num_str + 4, 1, '        Способ реабилитации', bold_style)
         set_cell(sheet, num_str + 4, 9, 'Исполнители', bold_style)
-        set_cell(sheet, num_str + 4, 5, '      единицы', bold_style)
+        set_cell(sheet, num_str + 4, 5, '      еденицы', bold_style)
         set_cell(sheet, num_str + 2, 3, 'всего:', style, alignment=3)
         set_cell(sheet, num_str + 2, 4, len(all_records), style)
 

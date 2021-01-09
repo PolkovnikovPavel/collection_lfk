@@ -635,7 +635,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background: #FFFFFF</string>
+     <string notr="true">background: #DFFCFF</string>
     </property>
     <property name="text">
      <string>нажмите, чтоб посмотреть полностью</string>

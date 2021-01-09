@@ -33,11 +33,16 @@ class LoggingInSystem(QMainWindow, Ui_FormAccountLogin):
 
     def check(self):
         if os.path.isfile('options.txt'):
-            with open('options.txt') as file:
-                db_name = file.read().split('\n')[0]
-                if not os.path.isfile(db_name):
-                    if db_name != '':
-                        db_name = 'nr'
+            try:
+                with open('options.txt') as file:
+                    db_name = file.read().split('\n')[0]
+                    if not os.path.isfile(db_name):
+                        if db_name != '':
+                            db_name = 'nr'
+            except Exception:
+                with open('options.txt', 'w') as file:
+                    file.write('')
+                db_name = ''
         else:
             with open('options.txt', 'w') as file:
                 file.write('')

@@ -8,6 +8,8 @@ from data.design.report_1 import Ui_MainWindow as Ui_Report1
 bold_big_style = Font(size="14", bold=True)
 bold_style = Font(size="11", bold=True)
 style = Font(size="11")
+abc = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+       'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 
 def set_cell(sheet, x, y, value, style, alignment=1):
@@ -37,7 +39,7 @@ def get_date_calendar(calendar):
 
 
 
-def create_report():
+def create_report(self):
 
     file_name = QFileDialog.getSaveFileName(self, 'Путь, где сохранить отчёт', filter='*.xlsx')[0]
     if not file_name:
@@ -46,7 +48,7 @@ def create_report():
     try:
         book = openpyxl.load_workbook(file_name)
         for sheet_name in book.sheetnames:
-            if sheet_name == "отчёт за день":
+            if sheet_name == "сборный":
                 sheet = book.get_sheet_by_name(sheet_name)
                 book.remove_sheet(sheet)
         sheet = book.create_sheet()
@@ -54,26 +56,27 @@ def create_report():
         book = openpyxl.Workbook()
         sheet = book.active
 
-    sheet.title = "отчёт за день"
+    sheet.title = "сборный"
 
     set_cell(sheet, 1, 1, 'Сборный отчёт динамики лечения', bold_big_style)
 
-
     set_cell(sheet, 2, 1, 'ФИО, год рождения, диагноз', bold_style)
     set_cell(sheet, 2, 2, '№ карты', bold_style)
+    set_cell(sheet, 2, 3, 'дата с..по..', bold_style)
+    set_cell(sheet, 2, 4, 'дней лечения', bold_style)
+    set_cell(sheet, 2, 5, 'дней ЛФК', bold_style)
+    set_cell(sheet, 2, 6, 'всего процедур', bold_style)
+    set_cell(sheet, 2, 7, 'сего ед.', bold_style)
 
+    inquiry = f"""SELECT DISTINCT full_name, diagnosis, date_of_birth, story_number, category, department, my_story_number
+                                                        FROM patients
+                                                    WHERE is_discharge = 1"""
+    all_patients = self.cur.execute(inquiry).fetchall()
 
-    sheet.column_dimensions['B'].width = 55
-    sheet.column_dimensions['A'].width = 5
-    sheet.column_dimensions['C'].width = 12
-    sheet.column_dimensions['D'].width = 17
-    sheet.column_dimensions['F'].width = 7
-    sheet.column_dimensions['H'].width = 7
-    sheet.column_dimensions['J'].width = 7
-    sheet.column_dimensions['G'].width = 10
-    sheet.column_dimensions['I'].width = 10
-    sheet.column_dimensions['K'].width = 10
-    sheet.column_dimensions['E'].width = 24
+    for symbol_1 in abc:
+        for symbol_2 in abc[1::]:
+            sheet.column_dimensions[symbol_1 + symbol_2].width = 1.09
+
 
     sheet.sheet_properties.pageSetUpPr.fitToPage = True
     sheet.page_setup.fitToHeight = False

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>596</width>
-    <height>378</height>
+    <width>616</width>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>20</pointsize>
+      <pointsize>19</pointsize>
      </font>
     </property>
     <property name="text">
@@ -43,7 +43,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
      </font>
     </property>
     <property name="text">
@@ -55,13 +55,13 @@
      <rect>
       <x>180</x>
       <y>60</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -81,7 +81,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
      </font>
     </property>
     <property name="text">
@@ -102,7 +102,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
      </font>
     </property>
     <property name="mouseTracking">
@@ -116,15 +116,15 @@
    <widget class="QPushButton" name="button_add_procedure">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>390</x>
       <y>60</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -138,13 +138,13 @@
      <rect>
       <x>180</x>
       <y>110</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -156,9 +156,9 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>390</x>
       <y>110</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
@@ -178,13 +178,13 @@
      <rect>
       <x>180</x>
       <y>160</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -198,13 +198,13 @@
      <rect>
       <x>180</x>
       <y>210</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -216,15 +216,15 @@
    <widget class="QPushButton" name="report_3">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>390</x>
       <y>210</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -238,7 +238,7 @@
      <rect>
       <x>180</x>
       <y>260</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
@@ -256,15 +256,15 @@
    <widget class="QPushButton" name="report_5">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>390</x>
       <y>260</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -276,15 +276,15 @@
    <widget class="QPushButton" name="report_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>390</x>
       <y>160</y>
-      <width>200</width>
+      <width>210</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
@@ -299,7 +299,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>596</width>
+     <width>616</width>
      <height>18</height>
     </rect>
    </property>

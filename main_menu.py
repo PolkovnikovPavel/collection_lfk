@@ -11,6 +11,7 @@ from report_1 import ReportMenu1
 from report_2 import ReportMenu2
 from report_3 import ReportMenu3
 from report_4 import ReportMenu4
+from report_5 import create_report as create_report_5
 
 
 def get_date_calendar(calendar):
@@ -42,6 +43,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.report_2.clicked.connect(self.open_report_2)
         self.report_3.clicked.connect(self.open_report_3)
         self.report_4.clicked.connect(self.open_report_4)
+        self.report_5.clicked.connect(self.create_report_5)
         self.button_add_procedure.clicked.connect(self.open_adding_procedure)
         self.name.setText(self.ac_name)
         self.con = sqlite3.connect(db_name)
@@ -97,6 +99,9 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.report_window = ReportMenu4(self, self.ac_name, self.db_name)
         # self.close()
         self.report_window.show()
+
+    def create_report_5(self):
+        create_report_5(self)
 
     def open_login(self):
         self.close()  # закрывает это окно

@@ -261,7 +261,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(15)
         self.description.setFont(font)
-        self.description.setStyleSheet("background: #FFFFFF")
+        self.description.setStyleSheet("background: #DFFCFF")
         self.description.setObjectName("description")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
