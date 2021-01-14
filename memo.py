@@ -1,7 +1,7 @@
 import os, sqlite3, openpyxl
 from openpyxl.styles import Font, Alignment
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
-from PyQt5 import QtCore, QtGui, QtWidgets
+from history import create_history
 
 from data.design.form_memo import Ui_MainWindow as Ui_memo
 
@@ -27,8 +27,16 @@ class MemoMenu(QMainWindow, Ui_memo):
         self.text.setText(patient[1])
 
     def closeEvent(self, event):
-        inquiry = f"""UPDATE patients SET memo = '{self.text.toPlainText()}'
-                                            WHERE id = {self.id_patient}"""
+        new_text = self.text.toPlainText()
+        inquiry = f"""SELECT DISTINCT memo FROM patients 
+                                    WHERE id = {self.id_patient}"""
+        old_text = self.cur.execute(inquiry).fetchone()[0]
+        if ''.join(old_text.split()) != ''.join(new_text.split()):
+            description = f'memo_s;{old_text};{new_text};{self.id_patient}'
+            create_history(self, description)
+
+        inquiry = f"""UPDATE patients SET memo = '{new_text}'
+                                    WHERE id = {self.id_patient}"""
         self.cur.execute(inquiry)
         self.con.commit()
 

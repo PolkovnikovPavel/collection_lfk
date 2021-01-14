@@ -1,7 +1,7 @@
-import os, sqlite3
+import os, sqlite3, datetime
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QHBoxLayout
 from PyQt5 import QtCore, QtGui, QtWidgets
-#from PyQt5 import AlignHCenter
+from history import create_history
 
 from data.design.form_adding_procedures import Ui_MainWindow as Ui_FormAddingProcedures
 from memo import MemoMenu
@@ -28,7 +28,7 @@ def create_places_combobox(lesson_id, cur, all_places, seve_chenging_place):
 
 
     if id_plase[0] != 0:
-        inquiry = f"""SELECT DISTINCT name FROM places
+        inquiry = f"""SELECT DISTINCT short_name FROM places
                                 WHERE id = {id_plase[0]}"""
         rez = cur.execute(inquiry).fetchone()
         places.addItems([str(rez[0])])
@@ -165,6 +165,21 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.cur.execute(inquiry).fetchall()
         self.con.commit()
 
+        inquiry = f"""SELECT DISTINCT id FROM accounts WHERE name = '{self.ac_name}'"""
+        user_id = self.cur.execute(inquiry).fetchall()[0]
+
+        inquiry = f"""SELECT DISTINCT id FROM records"""
+        record_id = self.cur.execute(inquiry).fetchall()[-1][0]
+
+        now = datetime.datetime.now()
+        time = now.strftime('%d-%m-%Y  %H:%M')
+
+        inquiry = f"""INSERT INTO logs (user_id, description, date) 
+                        VALUES ({user_id[0]}, 'add_record;{record_id}', '{time}')"""
+        self.cur.execute(inquiry).fetchall()
+        self.con.commit()
+
+
         self.create_tabl()
 
     def create_tabl(self):
@@ -200,7 +215,7 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.main_table.setColumnWidth(9, 85)
         self.main_table.setColumnWidth(10, 85)
 
-        inquiry = f"""SELECT DISTINCT name FROM places WHERE is_deleted = 0"""
+        inquiry = f"""SELECT DISTINCT short_name FROM places WHERE is_deleted = 0"""
         all_places = self.cur.execute(inquiry).fetchall()
         all_places = list(map(lambda x: str(x[0]), all_places))
         all_places.append('------')
@@ -285,23 +300,17 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             self.main_table.setCellWidget(i, 8, doctor_2)
             self.main_table.setCellWidget(i, 10, doctor_3)
 
-        inquiry = f"""SELECT DISTINCT memo FROM patients WHERE id = {patient_id}"""
+        inquiry = f"""SELECT DISTINCT memo, diagnosis FROM patients WHERE id = {patient_id}"""
         memo_of_patient = self.cur.execute(inquiry).fetchone()
-        description = memo_of_patient[0].split()
-        rez_description = ''
-        for word in description:
-            if len(rez_description + word) > 42:
-                if len(word) > 3:
-                    rez_description += word[:3] + '...'
-                else:
-                    rez_description += word + '...'
-                break
-            else:
-                rez_description += word + ' '
+        description = memo_of_patient[0]
+        rez_description = ' '.join(description.split())[:39]
+        if len(' '.join(description.split())) > 39:
+            rez_description += '...'
         rez_description += '\n(нажмите, чтоб посмотреть полностью)'
-
         self.description.setText(rez_description)
 
+        diagnos = memo_of_patient[1]
+        self.diagnosis.setText(f'Диагноз: {diagnos}')
 
 
     def evaluation_selection(self):
@@ -412,6 +421,7 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             eval.setStyleSheet("background-color: #616161")
         return eval
 
+
     def seve_chenging_place(self):
         procedure_id = self.sender().args
         place = self.sender().currentText()
@@ -419,12 +429,23 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             place_id = 0
         else:
             inquiry = f"""SELECT DISTINCT id FROM places
-                                            WHERE name = '{place}'"""
+                                            WHERE short_name = '{place}'"""
             place_id = self.cur.execute(inquiry).fetchone()[0]
 
+        inquiry = f"""SELECT DISTINCT places.id FROM places, lessons
+                    WHERE lessons.id = {procedure_id} and lessons.id_plase = places.id"""
+        old_place_id = self.cur.execute(inquiry).fetchall()
+        if not old_place_id:
+            old_place_id = 0
+        else:
+            old_place_id = old_place_id[0][0]
+
+        description = f's_cheng_p;{old_place_id};{place_id};{procedure_id}'
+        create_history(self, description)
+
         inquiry = f"""UPDATE lessons
-                                    SET id_plase = {place_id}
-                                        WHERE id = {procedure_id}"""
+                            SET id_plase = {place_id}
+                                WHERE id = {procedure_id}"""
 
         self.cur.execute(inquiry)
         self.con.commit()
@@ -439,6 +460,18 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             inquiry = f"""SELECT DISTINCT id FROM accounts
                                         WHERE short_name = '{doctor}'"""
             doctor_id = self.cur.execute(inquiry).fetchone()[0]
+
+        inquiry = f"""SELECT DISTINCT accounts.id FROM accounts, lessons
+                            WHERE lessons.id = {procedure_id} and lessons.id_doctor = accounts.id"""
+        old_doctor_id = self.cur.execute(inquiry).fetchall()
+        if not old_doctor_id:
+            old_doctor_id = 0
+        else:
+            old_doctor_id = old_doctor_id[0][0]
+
+        description = f's_cheng_d;{old_doctor_id};{doctor_id};{procedure_id}'
+        create_history(self, description)
+
 
         inquiry = f"""UPDATE lessons
                             SET id_doctor = {doctor_id}
@@ -462,6 +495,8 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.sender().clicked.connect(self.restore_record)
         self.sender().setStyleSheet("background-color: #FEC2A0")
 
+        create_history(self, f'del_record;{record_id}')
+
     def restore_record(self):
         record_id = self.sender().args
         inquiry = f"""UPDATE records
@@ -474,6 +509,10 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.sender().clicked.disconnect()
         self.sender().clicked.connect(self.del_record)
         self.sender().setStyleSheet("background-color: #FE9895")
+
+
+        create_history(self, f'restore_record;{record_id}')
+
 
     def save_record(self):
         record_id = self.sender().args

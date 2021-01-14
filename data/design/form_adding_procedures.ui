@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>896</width>
-    <height>784</height>
+    <width>897</width>
+    <height>824</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,7 +105,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>380</y>
+      <y>410</y>
       <width>880</width>
       <height>370</height>
      </rect>
@@ -641,13 +641,31 @@
      <string>нажмите, чтоб посмотреть полностью</string>
     </property>
    </widget>
+   <widget class="QLabel" name="diagnosis">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>370</y>
+      <width>880</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Диагноз:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>896</width>
+     <width>897</width>
      <height>18</height>
     </rect>
    </property>

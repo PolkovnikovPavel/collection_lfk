@@ -1,6 +1,6 @@
 import os, sqlite3, datetime
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
-from PyQt5 import QtCore, QtGui, QtWidgets
+from history import create_history
 
 from data.design.form_adding_patient import Ui_MainWindow as Ui_FormAddingPatient
 
@@ -102,6 +102,11 @@ story_number, category, is_discharge, diagnosis, department, memo, date_of_opera
             inquiry = f"""INSERT INTO diagnoses (name) VALUES ('{diagnosis}')"""
             self.cur.execute(inquiry).fetchall()
             self.con.commit()
+
+
+        inquiry = f"""SELECT DISTINCT id FROM patients"""
+        patient_id = self.cur.execute(inquiry).fetchall()[-1][0]
+        create_history(self, f'add_patient;{patient_id}')
 
         self.close()
 

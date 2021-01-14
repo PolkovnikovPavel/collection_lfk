@@ -1,6 +1,6 @@
 import os, sqlite3, datetime
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
-from PyQt5 import QtCore, QtGui, QtWidgets
+from history import create_history
 
 from data.design.form_discharge_of_patients import Ui_MainWindow as Ui_FormDischarge
 
@@ -56,18 +56,8 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
         self.cur.execute(inquiry)
         self.con.commit()
 
-        inquiry = f"""SELECT DISTINCT id FROM accounts
-                               WHERE name = '{self.ac_name}'"""
-        user_id = self.cur.execute(inquiry).fetchall()[0]
 
-        now = datetime.datetime.now()
-        time = f"{now.day}.{now.month}.{now.year}  {now.hour}:{now.minute}"
-
-        inquiry = f"""INSERT INTO logs (user_id, description, date) 
-        VALUES ({user_id[0]}, 'discharge;{patient[1]}', '{time}')"""
-        self.cur.execute(inquiry).fetchall()
-        self.con.commit()
-
+        create_history(self, f'discharge;{patient[1]}')
 
         self.close()
 
