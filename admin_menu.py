@@ -2,7 +2,7 @@ import os, sqlite3
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from data.design.form_admin_menu import Ui_FormAdminMenu
+from data.design.form_admin_menu import Ui_FormMainMenu as Ui_FormAdminMenu
 
 
 class MyPushButton(QtWidgets.QPushButton):
@@ -108,7 +108,7 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         self.new_name.setText('')
 
     def create_places(self):
-        self.name_category.setText('Места проведения ЛФК')
+        self.name_category.setText('Способ реабилитации')
         font = QtGui.QFont()
         font.setPointSize(15)
         _translate = QtCore.QCoreApplication.translate

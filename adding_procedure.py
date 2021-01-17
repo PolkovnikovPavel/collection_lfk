@@ -5,6 +5,7 @@ from history import create_history
 
 from data.design.form_adding_procedures import Ui_MainWindow as Ui_FormAddingProcedures
 from memo import MemoMenu
+from data_of_patient import DataPatient
 
 
 class MyPushButton(QtWidgets.QPushButton):
@@ -106,12 +107,13 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
         self.exit_button.clicked.connect(self.open_main_menu)
         self.description.clicked.connect(self.open_memo)
         self.add_new_day_button.clicked.connect(self.add_new_day)
+        self.chenge_data_of_patient.clicked.connect(self.open_menu_data_of_patient)
         self.name_patient.activated.connect(self.create_tabl)
         self.main_table.cellPressed[int, int].connect(self.clicked_on_table)
         self.main_table.setColumnCount(11)
         self.main_table.setHorizontalHeaderLabels([' ', ' ', 'дата', 'оценка',
-                            'кол.\nупр.', 'место\n№1', 'врач\n№1',
-                            'место\n№2', 'врач\n№2', 'место\n№3', 'врач\n№3'])
+                            'кол.\nупр.', 'процед.\n№1', 'врач\n№1',
+                            'процед.\n№2', 'врач\n№2', 'процед.\n№3', 'врач\n№3'])
 
 
 
@@ -575,3 +577,12 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             return
         self.memo_window = MemoMenu(self, self.ac_name, self.db_name, id_patient)
         self.memo_window.show()
+
+    def open_menu_data_of_patient(self):
+        patient_id = -1
+        for text, id in self.all_patients:
+            if text == self.name_patient.currentText():
+                patient_id = id
+
+        self.data_of_patient_window = DataPatient(self, self.ac_name, self.db_name, patient_id)
+        self.data_of_patient_window.show()

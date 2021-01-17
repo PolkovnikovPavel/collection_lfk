@@ -182,7 +182,56 @@ class HistoryMenu(QMainWindow, Ui_FormHistory):
                                         WHERE patients.id = {id_patient}"""
                 patient = self.cur.execute(inquiry).fetchone()
                 text = f'Изменена доп. информация у "{patient[0]}" ({patient[1]}) с "{old_text}" на "{new_text}"'
+            elif 'c_patient' in description:
+                id_patient = description.split(';')[1]
+                old_full_name = description.split(';')[2]
+                new_full_name = description.split(';')[3]
+                old_date_of_birth = description.split(';')[4]
+                new_date_of_birth = description.split(';')[5]
+                old_story_number = description.split(';')[6]
+                new_story_number = description.split(';')[7]
+                old_category = description.split(';')[8]
+                new_category = description.split(';')[9]
+                old_diagnosis = description.split(';')[10]
+                new_diagnosis = description.split(';')[11]
+                old_department = description.split(';')[12]
+                new_department = description.split(';')[13]
+                old_memo = description.split(';')[14]
+                new_memo = description.split(';')[15]
+                old_date_of_operation = description.split(';')[16]
+                new_date_of_operation = description.split(';')[17]
+                old_story_number_my = description.split(';')[18]
+                new_story_number_my = description.split(';')[19]
 
+                inquiry = f"""SELECT DISTINCT full_name, story_number FROM patients WHERE patients.id = {id_patient}"""
+                patient = self.cur.execute(inquiry).fetchone()
+                text = f'Изменён пациент "{patient[0]}" ({patient[1]}): '
+                if old_full_name != new_full_name:
+                    text += f'ФИО (было "{old_full_name}", стало "{new_full_name}"), '
+                if old_date_of_birth != new_date_of_birth:
+                    text += f'Дата рождения (было {old_date_of_birth}, стало {new_date_of_birth}), '
+                if old_story_number != new_story_number:
+                    text += f'Номер истории (было {old_story_number}, стало {new_story_number}), '
+                if old_category != new_category:
+                    inquiry = f"""SELECT DISTINCT name FROM categories WHERE id = {old_category}"""
+                    old_category = self.cur.execute(inquiry).fetchone()
+                    inquiry = f"""SELECT DISTINCT name FROM categories WHERE id = {new_category}"""
+                    new_category = self.cur.execute(inquiry).fetchone()
+                    text += f'Категория (было "{old_category[0]}", стало "{new_category[0]}"), '
+                if old_diagnosis != new_diagnosis:
+                    text += f'диагноз (было "{old_diagnosis}", стало "{new_diagnosis}"), '
+                if old_department != new_department:
+                    inquiry = f"""SELECT DISTINCT name FROM departments WHERE id = {old_department}"""
+                    old_department = self.cur.execute(inquiry).fetchone()
+                    inquiry = f"""SELECT DISTINCT name FROM departments WHERE id = {new_department}"""
+                    new_department = self.cur.execute(inquiry).fetchone()
+                    text += f'Отделение (было "{old_department[0]}", стало "{new_department[0]}"), '
+                if old_memo.split() != new_memo.split():
+                    text += f'Описание (было "{old_memo}", стало "{new_memo}"), '
+                if old_date_of_operation != new_date_of_operation:
+                    text += f'Дата опирации (было {old_date_of_operation}, стало {new_date_of_operation}), '
+                if old_story_number_my != new_story_number_my:
+                    text += f'Порядковый номер (было {old_story_number_my}, стало {new_story_number_my}), '
 
             description = QtWidgets.QLineEdit(text)
             description.setFont(font)
@@ -299,7 +348,34 @@ class HistoryMenu(QMainWindow, Ui_FormHistory):
             inquiry = f"""UPDATE logs SET is_canceled = 1 WHERE id = {memo_id}"""
             self.cur.execute(inquiry)
             self.con.commit()
+        elif 'c_patient' in description:
+            id_patient = description.split(';')[1]
+            old_full_name = description.split(';')[2]
+            old_date_of_birth = description.split(';')[4]
+            old_story_number = description.split(';')[6]
+            old_category = description.split(';')[8]
+            old_diagnosis = description.split(';')[10]
+            old_department = description.split(';')[12]
+            old_memo = description.split(';')[14]
+            old_date_of_operation = description.split(';')[16]
+            old_story_number_my = description.split(';')[18]
 
+            inquiry = f"""UPDATE patients
+                            SET full_name = '{old_full_name}',
+                        date_of_birth = '{old_date_of_birth}', 
+                        story_number = {old_story_number},
+                        category = {old_category},
+                        diagnosis = '{old_diagnosis}',
+                        department = {old_department},
+                        memo = '{old_memo}',
+                        date_of_operation = '{old_date_of_operation}',
+                        my_story_number = {old_story_number_my}
+                                WHERE id = {id_patient}"""
+            self.cur.execute(inquiry).fetchall()
+            self.con.commit()
+            inquiry = f"""UPDATE logs SET is_canceled = 1 WHERE id = {memo_id}"""
+            self.cur.execute(inquiry)
+            self.con.commit()
 
         _translate = QtCore.QCoreApplication.translate
         self.sender().clicked.disconnect()
@@ -406,6 +482,34 @@ class HistoryMenu(QMainWindow, Ui_FormHistory):
             self.cur.execute(inquiry)
             self.con.commit()
 
+            inquiry = f"""UPDATE logs SET is_canceled = 0 WHERE id = {memo_id}"""
+            self.cur.execute(inquiry)
+            self.con.commit()
+        elif 'c_patient' in description:
+            id_patient = description.split(';')[1]
+            new_full_name = description.split(';')[3]
+            new_date_of_birth = description.split(';')[5]
+            new_story_number = description.split(';')[7]
+            new_category = description.split(';')[9]
+            new_diagnosis = description.split(';')[11]
+            new_department = description.split(';')[13]
+            new_memo = description.split(';')[15]
+            new_date_of_operation = description.split(';')[17]
+            new_story_number_my = description.split(';')[19]
+
+            inquiry = f"""UPDATE patients
+                            SET full_name = '{new_full_name}',
+                        date_of_birth = '{new_date_of_birth}', 
+                        story_number = {new_story_number},
+                        category = {new_category},
+                        diagnosis = '{new_diagnosis}',
+                        department = {new_department},
+                        memo = '{new_memo}',
+                        date_of_operation = '{new_date_of_operation}',
+                        my_story_number = {new_story_number_my}
+                                WHERE id = {id_patient}"""
+            self.cur.execute(inquiry).fetchall()
+            self.con.commit()
             inquiry = f"""UPDATE logs SET is_canceled = 0 WHERE id = {memo_id}"""
             self.cur.execute(inquiry)
             self.con.commit()

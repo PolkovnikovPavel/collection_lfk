@@ -35,8 +35,8 @@ class AddingMenu(QMainWindow, Ui_FormAddingPatient):
         inquiry = f"""SELECT DISTINCT name FROM diagnoses"""
         diagnoses = self.cur.execute(inquiry).fetchall()
         for diagnose in diagnoses[::-1]:
-            self.all_diagnosis.append(diagnose[0])
-            self.text_diagnos.addItem(diagnose[0])
+            self.all_diagnosis.append(str(diagnose[0]))
+            self.text_diagnos.addItem(str(diagnose[0]))
 
         inquiry = f"""SELECT DISTINCT name FROM categories
                             WHERE is_deleted = 0"""
@@ -60,15 +60,7 @@ class AddingMenu(QMainWindow, Ui_FormAddingPatient):
             new_num = 1
         self.story_number_my.setValue(new_num)
 
-        inquiry = f"""SELECT DISTINCT story_number, date_of_operation FROM patients"""
-        old_nums = self.cur.execute(inquiry).fetchall()
-        old_nums = filter(lambda x: x[1].split('.')[2] == str(datetime.datetime.now().year), old_nums)
-        old_nums = list(map(lambda x: x[0], old_nums))
-        if len(old_nums) != 0:
-            new_num = max(old_nums) + 1
-        else:
-            new_num = 1
-        self.story_number.setValue(new_num)
+        self.story_number.setValue(1)
 
 
 

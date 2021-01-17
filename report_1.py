@@ -45,11 +45,11 @@ def create_report_on_day(sheet, cur, choice_date, start_num_str):
     set_cell(sheet, start_num_str + 3, 3, '№ истории', bold_style)
     set_cell(sheet, start_num_str + 3, 4, 'взр./реб.', bold_style)
     set_cell(sheet, start_num_str + 3, 5, 'Отдел', bold_style)
-    set_cell(sheet, start_num_str + 3, 6, 'место', bold_style)
+    set_cell(sheet, start_num_str + 3, 6, 'процед.', bold_style)
     set_cell(sheet, start_num_str + 3, 7, 'исп.', bold_style)
-    set_cell(sheet, start_num_str + 3, 8, 'место', bold_style)
+    set_cell(sheet, start_num_str + 3, 8, 'процед.', bold_style)
     set_cell(sheet, start_num_str + 3, 9, 'исп.', bold_style)
-    set_cell(sheet, start_num_str + 3, 10, 'место', bold_style)
+    set_cell(sheet, start_num_str + 3, 10, 'процед.', bold_style)
     set_cell(sheet, start_num_str + 3, 11, 'исп.', bold_style)
 
     num_str = start_num_str + 4

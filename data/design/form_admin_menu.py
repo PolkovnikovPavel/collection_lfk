@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_FormAdminMenu(object):
+class Ui_FormMainMenu(object):
     def setupUi(self, FormMainMenu):
         FormMainMenu.setObjectName("FormMainMenu")
         FormMainMenu.resize(800, 600)
@@ -24,7 +24,7 @@ class Ui_FormAdminMenu(object):
         self.out_button.setFont(font)
         self.out_button.setObjectName("out_button")
         self.name_category = QtWidgets.QLabel(self.centralwidget)
-        self.name_category.setGeometry(QtCore.QRect(260, 10, 341, 51))
+        self.name_category.setGeometry(QtCore.QRect(210, 10, 530, 51))
         font = QtGui.QFont()
         font.setPointSize(20)
         font.setBold(True)
@@ -84,7 +84,7 @@ class Ui_FormAdminMenu(object):
         self.new_doktor_button.setObjectName("new_doktor_button")
         FormMainMenu.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FormMainMenu)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 18))
         self.menubar.setObjectName("menubar")
         FormMainMenu.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(FormMainMenu)
@@ -100,7 +100,7 @@ class Ui_FormAdminMenu(object):
         self.out_button.setText(_translate("FormMainMenu", "Вернуться"))
         self.name_category.setText(_translate("FormMainMenu", "Места"))
         self.button_add.setText(_translate("FormMainMenu", "Добавить"))
-        self.button_place.setText(_translate("FormMainMenu", "Места"))
+        self.button_place.setText(_translate("FormMainMenu", "Процедуры"))
         self.categories_button.setText(_translate("FormMainMenu", "Категории"))
         self.departments_button.setText(_translate("FormMainMenu", "Отделение"))
         self.new_doktor_button.setText(_translate("FormMainMenu", "Исполнители"))
