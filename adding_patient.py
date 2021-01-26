@@ -1,6 +1,7 @@
 import os, sqlite3, datetime
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from history import create_history
+from PyQt5 import QtGui
 
 from data.design.form_adding_patient import Ui_MainWindow as Ui_FormAddingPatient
 
@@ -27,9 +28,11 @@ class AddingMenu(QMainWindow, Ui_FormAddingPatient):
         self.ac_name = ac_name
         self.db_name = db_name
         self.setupUi(self)
+        self.old_choice_date = None
 
         self.save_button.clicked.connect(self.save_patient)
         self.exit_button.clicked.connect(self.open_main_menu)
+        self.choice_date_of_operation.clicked['QDate'].connect(self.choiced_date)
 
         self.all_diagnosis = []
         inquiry = f"""SELECT DISTINCT name FROM diagnoses"""
@@ -61,6 +64,7 @@ class AddingMenu(QMainWindow, Ui_FormAddingPatient):
         self.story_number_my.setValue(new_num)
 
         self.story_number.setValue(1)
+        self.choiced_date()
 
 
 
@@ -101,6 +105,20 @@ story_number, category, is_discharge, diagnosis, department, memo, date_of_opera
         create_history(self, f'add_patient;{patient_id}')
 
         self.close()
+
+    def choiced_date(self):
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        format = QtGui.QTextCharFormat()
+        format.setFont(QtGui.QFont('Times', 16))
+        format.setFontWeight(QtGui.QFont.Bold)
+        old_format = QtGui.QTextCharFormat()
+        old_format.setFont(font)
+        choice_date = self.choice_date_of_operation.selectedDate()
+        self.choice_date_of_operation.setDateTextFormat(choice_date, format)
+        if self.old_choice_date:
+            self.choice_date_of_operation.setDateTextFormat(self.old_choice_date, old_format)
+        self.old_choice_date = choice_date
 
     def open_main_menu(self):
         self.close()  # закрывает это окно

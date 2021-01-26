@@ -243,7 +243,7 @@ class HistoryMenu(QMainWindow, Ui_FormHistory):
 
     def resizeEvent(self, event):
         self.main_table.setGeometry(QtCore.QRect(10, 120, self.width() - 20, self.height() - 150))
-        self.main_table.setColumnWidth(3, self.width() - 650)
+        self.main_table.setColumnWidth(3, self.width() - 660)
 
     def cancel_log(self):
         memo_id = self.sender().args

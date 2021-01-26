@@ -84,6 +84,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
         self.main_menu = main_menu
         self.ac_name = ac_name
         self.setupUi(self)
+        self.old_choice_date = None
         self.search.textChanged.connect(self.valueChanged)
         self.radio_1_1.toggled.connect(self.evaluation_selection)
         self.radio_1_2.toggled.connect(self.evaluation_selection)
@@ -109,6 +110,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
         self.add_new_day_button.clicked.connect(self.add_new_day)
         self.chenge_data_of_patient.clicked.connect(self.open_menu_data_of_patient)
         self.name_patient.activated.connect(self.create_tabl)
+        self.choice_date.clicked['QDate'].connect(self.choiced_date)
         self.main_table.cellPressed[int, int].connect(self.clicked_on_table)
         self.main_table.setColumnCount(11)
         self.main_table.setHorizontalHeaderLabels([' ', ' ', 'дата', 'оценка',
@@ -127,7 +129,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
             text = f'{patient[0]} -{patient[4]}- ({patient[2]}) {patient[1]}'
             self.name_patient.addItem(text)
             self.all_patients.append((text, patient[3]))
-
+        self.choiced_date()
         self.create_tabl()
 
 
@@ -302,7 +304,7 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
             self.main_table.setCellWidget(i, 8, doctor_2)
             self.main_table.setCellWidget(i, 10, doctor_3)
 
-        inquiry = f"""SELECT DISTINCT memo, diagnosis FROM patients WHERE id = {patient_id}"""
+        inquiry = f"""SELECT DISTINCT memo, diagnosis, date_of_operation FROM patients WHERE id = {patient_id}"""
         memo_of_patient = self.cur.execute(inquiry).fetchone()
         description = memo_of_patient[0]
         rez_description = ' '.join(description.split())[:39]
@@ -312,7 +314,11 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.description.setText(rez_description)
 
         diagnos = memo_of_patient[1]
-        self.diagnosis.setText(f'Диагноз: {diagnos}')
+        date_of_operation = memo_of_patient[2]
+        self.diagnosis.setText(f'Дата оп. {date_of_operation}  {diagnos}')
+
+        self.resizeEvent(0)
+
 
 
     def evaluation_selection(self):
@@ -434,23 +440,24 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
                                             WHERE short_name = '{place}'"""
             place_id = self.cur.execute(inquiry).fetchone()[0]
 
-        inquiry = f"""SELECT DISTINCT places.id FROM places, lessons
-                    WHERE lessons.id = {procedure_id} and lessons.id_plase = places.id"""
+        inquiry = f"""SELECT DISTINCT id_plase FROM lessons
+                    WHERE id = {procedure_id}"""
         old_place_id = self.cur.execute(inquiry).fetchall()
         if not old_place_id:
             old_place_id = 0
         else:
             old_place_id = old_place_id[0][0]
 
-        description = f's_cheng_p;{old_place_id};{place_id};{procedure_id}'
-        create_history(self, description)
+        if old_place_id != place_id:
+            description = f's_cheng_p;{old_place_id};{place_id};{procedure_id}'
+            create_history(self, description)
 
-        inquiry = f"""UPDATE lessons
-                            SET id_plase = {place_id}
-                                WHERE id = {procedure_id}"""
+            inquiry = f"""UPDATE lessons
+                                SET id_plase = {place_id}
+                                    WHERE id = {procedure_id}"""
 
-        self.cur.execute(inquiry)
-        self.con.commit()
+            self.cur.execute(inquiry)
+            self.con.commit()
         self.create_tabl()
 
     def seve_chenging_doctor(self):
@@ -463,24 +470,25 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
                                         WHERE short_name = '{doctor}'"""
             doctor_id = self.cur.execute(inquiry).fetchone()[0]
 
-        inquiry = f"""SELECT DISTINCT accounts.id FROM accounts, lessons
-                            WHERE lessons.id = {procedure_id} and lessons.id_doctor = accounts.id"""
+        inquiry = f"""SELECT DISTINCT id_doctor FROM lessons
+                            WHERE id = {procedure_id}"""
         old_doctor_id = self.cur.execute(inquiry).fetchall()
         if not old_doctor_id:
             old_doctor_id = 0
         else:
             old_doctor_id = old_doctor_id[0][0]
 
-        description = f's_cheng_d;{old_doctor_id};{doctor_id};{procedure_id}'
-        create_history(self, description)
+        if old_doctor_id != doctor_id:
+            description = f's_cheng_d;{old_doctor_id};{doctor_id};{procedure_id}'
+            create_history(self, description)
 
 
-        inquiry = f"""UPDATE lessons
-                            SET id_doctor = {doctor_id}
-                                    WHERE id = {procedure_id}"""
+            inquiry = f"""UPDATE lessons
+                                SET id_doctor = {doctor_id}
+                                        WHERE id = {procedure_id}"""
 
-        self.cur.execute(inquiry)
-        self.con.commit()
+            self.cur.execute(inquiry)
+            self.con.commit()
         self.create_tabl()
 
     def del_record(self):
@@ -586,3 +594,54 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
 
         self.data_of_patient_window = DataPatient(self, self.ac_name, self.db_name, patient_id)
         self.data_of_patient_window.show()
+
+    def choiced_date(self):
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        format = QtGui.QTextCharFormat()
+        format.setFont(QtGui.QFont('Times', 16))
+        format.setFontWeight(QtGui.QFont.Bold)
+        old_format = QtGui.QTextCharFormat()
+        old_format.setFont(font)
+        choice_date = self.choice_date.selectedDate()
+        self.choice_date.setDateTextFormat(choice_date, format)
+        if self.old_choice_date:
+            self.choice_date.setDateTextFormat(self.old_choice_date, old_format)
+        self.old_choice_date = choice_date
+
+    def resizeEvent(self, event):
+        self.main_table.setGeometry(QtCore.QRect(10, 410, self.width() - 20, self.height() - 450))
+        if self.width() > 1100:
+            width = (self.width() - 580) // 6
+            if width > 170:
+                width = 170
+            self.main_table.setColumnWidth(5, width)
+            self.main_table.setColumnWidth(6, width)
+            self.main_table.setColumnWidth(7, width)
+            self.main_table.setColumnWidth(8, width)
+            self.main_table.setColumnWidth(9, width)
+            self.main_table.setColumnWidth(10, width)
+        else:
+            self.main_table.setColumnWidth(5, 85)
+            self.main_table.setColumnWidth(6, 85)
+            self.main_table.setColumnWidth(7, 85)
+            self.main_table.setColumnWidth(8, 85)
+            self.main_table.setColumnWidth(9, 85)
+            self.main_table.setColumnWidth(10, 85)
+
+        self.diagnosis.setGeometry(QtCore.QRect(10, 370, self.width() - 180, 31))
+        self.chenge_data_of_patient.setGeometry(QtCore.QRect(self.width() - 180, 370, 170, 40))
+        self.search.setGeometry(QtCore.QRect(330, 10, self.width() - 340, 30))
+        self.name_patient.setGeometry(QtCore.QRect(330, 40, self.width() - 340, 30))
+        self.label_6.setGeometry(QtCore.QRect(self.width() - 340, 70, 240, 31))
+        self.label_8.setGeometry(QtCore.QRect(self.width() - 460, 100, 40, 31))
+        self.label_9.setGeometry(QtCore.QRect(self.width() - 460, 130, 40, 31))
+        self.label_10.setGeometry(QtCore.QRect(self.width() - 460, 160, 40, 31))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(self.width() - 420, 100, 410, 30))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(self.width() - 420, 130, 410, 30))
+        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(self.width() - 420, 160, 410, 30))
+        self.label_7.setGeometry(QtCore.QRect(self.width() - 450, 200, 321, 60))
+        self.number_of_exercises.setGeometry(QtCore.QRect(self.width() - 120, 220, 110, 30))
+        self.description.setGeometry(QtCore.QRect(self.width() - 450, 260, 440, 50))
+        self.add_new_day_button.setGeometry(QtCore.QRect(self.width() - 450, 320, 440, 40))
+
