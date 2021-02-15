@@ -85,9 +85,9 @@ class LoggingInSystem(QMainWindow, Ui_FormAccountLogin):
         self.password.setText('')
         self.main_menu_window = MainMenu(self, name, self.db_name)
         self.close()  # закрывает это окно
-        self.main_menu_window.show()  # отображает окно для ученика
+        self.main_menu_window.show()  # отображает окно главного меню
 
     def open_self(self):
         self.login_window = LoggingInSystem()
         self.close()  # закрывает это окно
-        self.login_window.show()  # отображает окно для ученика
+        self.login_window.show()  # отображает это же окно

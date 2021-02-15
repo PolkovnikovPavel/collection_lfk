@@ -39,6 +39,7 @@ class ReportMenu3(QMainWindow, Ui_Report3):
         self.main_menu = main_menu
         self.ac_name = ac_name
         self.setupUi(self)
+        self.setWindowTitle('Отчёт за год')
         self.button.clicked.connect(self.create_report)
         self.name_year.activated.connect(self.select_year)
 

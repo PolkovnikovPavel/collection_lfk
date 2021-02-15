@@ -1,6 +1,7 @@
 import os, sqlite3, datetime
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from history import create_history
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 from data.design.form_discharge_of_patients import Ui_MainWindow as Ui_FormDischarge
 
@@ -37,6 +38,7 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
                                             WHERE is_discharge = 0 and is_deleted = 0"""
         all_patients = self.cur.execute(inquiry).fetchall()
         self.all_patients = []
+        all_patients.sort(key=lambda x: x[0])
         for patient in all_patients:
             text = f'{patient[0]} -{patient[4]}- ({patient[2]}) {patient[1]}'
             self.name_patient.addItem(text)
@@ -68,6 +70,12 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
         for patient in self.all_patients:
             if text.lower() in patient[0][:-10].lower():
                 self.name_patient.addItem(patient[0])
+
+    def resizeEvent(self, event):
+        self.search.setGeometry(QtCore.QRect(20, 50, self.width() - 30, 30))
+        self.name_patient.setGeometry(QtCore.QRect(20, 80, self.width() - 30, 30))
+        self.cancel_button.setGeometry(QtCore.QRect(self.width() - 180, 5, 170, 35))
+        self.button_discharge.setGeometry(QtCore.QRect(self.width() - 180, 120, 170, 40))
 
     def open_main_menu(self):
         self.close()  # закрывает это окно

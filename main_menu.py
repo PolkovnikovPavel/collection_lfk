@@ -6,6 +6,7 @@ from admin_menu import AdminMenu
 from adding_patient import AddingMenu
 from discharge_of_patients import DischargeMenu
 from adding_procedure import AddingProcedures
+from description_menu import DescriptionMenu
 from history import HistoryMenu
 from report_1 import ReportMenu1
 from report_2 import ReportMenu2
@@ -39,6 +40,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.add_patient_button.clicked.connect(self.open_adding_menu)
         self.delete_patient.clicked.connect(self.open_discharge_menu)
         self.history_button.clicked.connect(self.open_history)
+        self.description_button.clicked.connect(self.open_description)
         self.report_1.clicked.connect(self.open_report_1)
         self.report_2.clicked.connect(self.open_report_2)
         self.report_3.clicked.connect(self.open_report_3)
@@ -79,6 +81,11 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.history_window = HistoryMenu(self, self.ac_name, self.db_name)
         # self.close()
         self.history_window.show()
+
+    def open_description(self):
+        self.description_window = DescriptionMenu(self, self.ac_name, self.db_name)
+        # self.close()
+        self.description_window.show()
 
     def open_report_1(self):
         self.report_window = ReportMenu1(self, self.ac_name, self.db_name)

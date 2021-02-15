@@ -65,6 +65,7 @@ class ReportMenu4(QMainWindow, Ui_Report4):
         self.button.clicked.connect(self.create_report)
         self.choice_date_1.clicked['QDate'].connect(self.choiced_date_1)
         self.choice_date_2.clicked['QDate'].connect(self.choiced_date_2)
+        self.setWindowTitle('Карточки на период дней')
 
     def choiced_date_1(self):
         if (get_num_from_date(get_date_calendar(self.choice_date_1)) >

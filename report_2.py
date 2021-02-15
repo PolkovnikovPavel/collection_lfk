@@ -48,6 +48,7 @@ class ReportMenu2(QMainWindow, Ui_Report2):
         self.main_menu = main_menu
         self.ac_name = ac_name
         self.setupUi(self)
+        self.setWindowTitle('Отчёт за месяц')
         self.button.clicked.connect(self.create_report)
         self.name_month.activated.connect(self.select_month)
 
