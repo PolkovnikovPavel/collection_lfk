@@ -128,8 +128,8 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         self.main_table.setColumnWidth(1, 105)
         self.main_table.setColumnWidth(2, 240)
         self.main_table.setColumnWidth(3, 100)
-        self.main_table.setColumnWidth(4, 10)
-        self.main_table.setHorizontalHeaderLabels(['', '', 'название', 'сокр. имя', 'цена, ед.'])
+        self.main_table.setColumnWidth(4, 130)
+        self.main_table.setHorizontalHeaderLabels(['', '', 'название', 'сокр. имя', 'условные ед.'])
 
         for i in range(len(names)):
             button_1 = MyPushButton(self.centralwidget)
@@ -477,3 +477,8 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
     def open_main_menu(self):
         self.close()  # закрывает это окно
         self.main_menu.show()
+
+    def resizeEvent(self, event):
+        self.main_table.setGeometry(QtCore.QRect(180, 140, self.width() - 200, self.height() - 170))
+        self.main_table.setColumnWidth(2, self.width() - 700)
+

@@ -43,6 +43,7 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
             text = f'{patient[0]} -{patient[4]}- ({patient[2]}) {patient[1]}'
             self.name_patient.addItem(text)
             self.all_patients.append((text, patient[3]))
+        self.label_6.setText(f'Человек на лечении: {len(all_patients)}')
 
     def discharge_patient(self):
         self.patient = self.name_patient.currentText()

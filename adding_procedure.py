@@ -169,19 +169,12 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
         self.cur.execute(inquiry).fetchall()
         self.con.commit()
 
-        inquiry = f"""SELECT DISTINCT id FROM accounts WHERE name = '{self.ac_name}'"""
-        user_id = self.cur.execute(inquiry).fetchall()[0]
-
         inquiry = f"""SELECT DISTINCT id FROM records"""
         record_id = self.cur.execute(inquiry).fetchall()[-1][0]
 
-        now = datetime.datetime.now()
-        time = now.strftime('%d-%m-%Y  %H:%M')
+        description = f'add_record;{record_id}'
+        create_history(self, description)
 
-        inquiry = f"""INSERT INTO logs (user_id, description, date) 
-                        VALUES ({user_id[0]}, 'add_record;{record_id}', '{time}')"""
-        self.cur.execute(inquiry).fetchall()
-        self.con.commit()
 
 
         self.create_tabl()

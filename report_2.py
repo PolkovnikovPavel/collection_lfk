@@ -1,7 +1,7 @@
 import os, sqlite3, openpyxl
 from openpyxl.styles import Font, Alignment
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui
 
 from data.design.report_2 import Ui_MainWindow as Ui_Report2
 
@@ -244,6 +244,36 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
                 num_str += 1
                 set_cell(sheet, num_str, 8, doctor[0], pale_style)
                 set_cell(sheet, num_str, 13, doctors_by_places[doctor[0]], pale_style)
+        # ---------------------------------------------------------------------
+
+        # --------------------------развёрнутая таблица------------------------
+        num_str += 1
+        set_cell(sheet, num_str, 1, 'Специалист', style)
+        set_cell(sheet, num_str, 2, 'Пациенто-дней', style)
+        set_cell(sheet, num_str, 3, 'Всего\nпроцедур', style)
+        set_cell(sheet, num_str, 4, 'Едениц', style)
+
+
+        inquiry = f"""SELECT id, name, short_name, price FROM places
+                    WHERE is_deleted = 0"""
+        all_places = self.cur.execute(inquiry).fetchall()
+        for i in range(len(all_places)):
+            set_cell(sheet, num_str, 6 + i, str(all_places[i][2]), style)
+
+        inquiry = f"""SELECT id, name, short_name FROM accounts
+                    WHERE is_deleted = 0"""
+        all_specialists = self.cur.execute(inquiry).fetchall()
+
+        all_data = []
+        data = []
+        for specialist in all_specialists:
+            data.append(specialist[2])
+
+
+
+
+
+
 
         sheet.column_dimensions['D'].width = 5.5
         sheet.column_dimensions['E'].width = 6
