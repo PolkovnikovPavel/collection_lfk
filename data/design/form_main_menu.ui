@@ -153,7 +153,7 @@
      <string>Выписать пациента</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="button_viewing_procedure">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -170,7 +170,8 @@
      </font>
     </property>
     <property name="text">
-     <string>действие 4</string>
+     <string>Просмотр выписанных
+пациентов</string>
     </property>
    </widget>
    <widget class="QPushButton" name="report_1">

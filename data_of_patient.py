@@ -19,7 +19,8 @@ def get_date(date):
 
 
 class DataPatient(QMainWindow, Ui_FormDataPatient):
-    def __init__(self, main_menu, ac_name, db_name, patient_id):
+    def __init__(self, main_menu, ac_name, db_name, patient_id, mod=0):
+        self.mod = mod
         self.con = sqlite3.connect(db_name)
         self.cur = self.con.cursor()
 
@@ -43,7 +44,7 @@ class DataPatient(QMainWindow, Ui_FormDataPatient):
             self.text_diagnos.addItem(str(diagnose[0]))
 
         inquiry = f"""SELECT DISTINCT full_name, date_of_birth, story_number, id, my_story_number FROM patients
-                                            WHERE is_discharge = 0 and is_deleted = 0"""
+                                            WHERE is_discharge = {self.mod} and is_deleted = 0"""
         all_patients = self.cur.execute(inquiry).fetchall()
         all_patients.sort(key=lambda x: str(x[0]))
         self.all_patients = []
@@ -99,7 +100,7 @@ class DataPatient(QMainWindow, Ui_FormDataPatient):
 
 
     def save_patient(self):
-        if self.selected_patient == -1:
+        if self.selected_patient == -1 or self.mod != 0:
             return
 
         date_of_birth = get_date(self.choice_date_of_birth.date())

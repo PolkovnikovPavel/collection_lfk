@@ -11,8 +11,9 @@ style = Font(size="11")
 
 
 class MemoMenu(QMainWindow, Ui_memo):
-    def __init__(self, main_menu, ac_name, db_name, id_patient):
+    def __init__(self, main_menu, ac_name, db_name, id_patient, mod=0):
         super().__init__()
+        self.mod = mod
         self.con = sqlite3.connect(db_name)
         self.cur = self.con.cursor()
         self.main_menu = main_menu
@@ -27,6 +28,8 @@ class MemoMenu(QMainWindow, Ui_memo):
         self.text.setText(patient[1])
 
     def closeEvent(self, event):
+        if self.mod == 1:
+            return
         new_text = self.text.toPlainText()
         inquiry = f"""SELECT DISTINCT memo FROM patients 
                                     WHERE id = {self.id_patient}"""

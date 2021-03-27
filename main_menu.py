@@ -6,13 +6,14 @@ from admin_menu import AdminMenu
 from adding_patient import AddingMenu
 from discharge_of_patients import DischargeMenu
 from adding_procedure import AddingProcedures
+from viewing_old_patients import ViewingProcedures
 from description_menu import DescriptionMenu
 from history import HistoryMenu
 from report_1 import ReportMenu1
 from report_2 import ReportMenu2
 from report_3 import ReportMenu3
 from report_4 import ReportMenu4
-from report_5 import create_report as create_report_5
+from report_5 import ReportMenu5
 
 
 def get_date_calendar(calendar):
@@ -38,6 +39,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.exit_button.clicked.connect(self.open_login)
         self.admin_button.clicked.connect(self.open_admin_menu)
         self.add_patient_button.clicked.connect(self.open_adding_menu)
+        self.button_viewing_procedure.clicked.connect(self.open_viewing_procedure)
         self.delete_patient.clicked.connect(self.open_discharge_menu)
         self.history_button.clicked.connect(self.open_history)
         self.description_button.clicked.connect(self.open_description)
@@ -77,6 +79,11 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         # self.close()
         self.procedure_window.show()
 
+    def open_viewing_procedure(self):
+        self.procedure_window = ViewingProcedures(self, self.ac_name, self.db_name)
+        # self.close()
+        self.procedure_window.show()
+
     def open_history(self):
         self.history_window = HistoryMenu(self, self.ac_name, self.db_name)
         # self.close()
@@ -108,7 +115,9 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.report_window.show()
 
     def create_report_5(self):
-        create_report_5(self)
+        self.report_window = ReportMenu5(self, self.ac_name, self.db_name)
+        # self.close()
+        self.report_window.show()
 
     def open_login(self):
         self.close()  # закрывает это окно

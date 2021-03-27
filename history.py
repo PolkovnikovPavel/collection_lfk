@@ -128,7 +128,6 @@ class HistoryMenu(QMainWindow, Ui_FormHistory):
 
             date = get_datetime_from_text(log[4].split(' ')[0])
 
-            u = (start_date - date)
             if (start_date - date).days < count_days and (start_date - date).days >= 0:
                 button = MyPushButton(self.centralwidget)
                 button.setFont(font)

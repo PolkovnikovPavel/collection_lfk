@@ -131,6 +131,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
             self.all_patients.append((text, patient[3]))
         self.choiced_date()
         self.create_tabl()
+        self.label_12.setText(f'Всего человек: {len(self.all_patients)}')
 
 
     def add_new_day(self):
