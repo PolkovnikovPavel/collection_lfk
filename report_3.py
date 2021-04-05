@@ -1,7 +1,6 @@
 import os, sqlite3, openpyxl
 from openpyxl.styles import Font, Alignment
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 from data.design.report_3 import Ui_MainWindow as Ui_Report3
 

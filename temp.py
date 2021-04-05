@@ -1,10 +1,9 @@
-line = '9' * 127
-while '999' in line or '333' in line:
-    print(line)
-    if '333' in line:
-        i = line.find('333')
-        line = '9' + line[i + 3:]
-    else:
-        i = line.find('999')
-        line = line[0:i] + '3' + line[i + 3:]
-print(line)
+count = 0
+min_ = 14455
+for i in range(1740, 14455):
+    if i % 4 == 0 and i % 5 == 0:
+        if i % 8 != 0 and i % 12 != 0 and i % 16 != 0 and i % 30 != 0:
+            print(i)
+            count += 1
+
+print(count)

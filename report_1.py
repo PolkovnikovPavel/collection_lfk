@@ -99,13 +99,13 @@ def create_report_on_day(sheet, cur, choice_date, start_num_str):
         for lesson in (lesson_1, lesson_2, lesson_3):
             if lesson[3] == 0 and lesson[1] != 0 and lesson[2] != 0:
                 count_of_records += 1
-                inquiry = f"SELECT DISTINCT name FROM places WHERE id = {lesson[1]}"
+                inquiry = f"SELECT DISTINCT short_name, name FROM places WHERE id = {lesson[1]}"
                 place = cur.execute(inquiry).fetchone()
                 stitch.append(place[0])
-                if place[0] not in all_places:
-                    all_places[place[0]] = 1
+                if place[1] not in all_places:
+                    all_places[place[1]] = 1
                 else:
-                    all_places[place[0]] += 1
+                    all_places[place[1]] += 1
 
                 inquiry = f"SELECT DISTINCT short_name FROM accounts WHERE id = {lesson[2]}"
                 name = cur.execute(inquiry).fetchone()

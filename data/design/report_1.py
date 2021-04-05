@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         self.choice_date = QtWidgets.QCalendarWidget(self.centralwidget)
         self.choice_date.setGeometry(QtCore.QRect(20, 120, 410, 301))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(13)
         self.choice_date.setFont(font)
         self.choice_date.setObjectName("choice_date")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
