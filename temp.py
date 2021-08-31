@@ -1,9 +1,18 @@
-count = 0
-min_ = 14455
-for i in range(1740, 14455):
-    if i % 4 == 0 and i % 5 == 0:
-        if i % 8 != 0 and i % 12 != 0 and i % 16 != 0 and i % 30 != 0:
-            print(i)
-            count += 1
+points = int(input())
+
+strings = points // 16000 * 7
+wolf = points // 16000 * 8
+rabbit = points // 16000 * 4
+
+count = (strings - 6) // 2
+wolf = wolf - 10 - count * 2
+rabbit = rabbit - 5 - count
+strings = strings - 6 - count * 2
 
 print(count)
+print('______')
+print(strings)
+print(wolf)
+print(rabbit)
+input()
+

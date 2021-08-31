@@ -18,6 +18,7 @@ purple_fill = PatternFill(start_color='FF9966CC', fill_type='solid')
 colors = {1: green_fill, 2: yellow_fill, 3: red_fill, 4: purple_fill, 5: None}
 white_blue = PatternFill(start_color='FFf2f8fe', fill_type='solid')
 white_yellow = PatternFill(start_color='FFf5f5dc', fill_type='solid')
+color_light_gray = PatternFill(start_color='e1e1e1', fill_type='solid')
 
 border_top = Border(top=Side(style='thick'))
 border_t_r_l = Border(left=Side(style='medium'),
@@ -194,7 +195,7 @@ class ReportMenu5(QMainWindow, Ui_Report5):
         set_cell(sheet, 2, 1, 'ФИО, год рождения, диагноз', bold_style)
         set_cell(sheet, 2, 2, '№ карты', bold_style)
         set_cell(sheet, 2, 3, 'дата с..по..', bold_style)
-        set_cell(sheet, 2, 4, 'дней пробывания', bold_style)
+        set_cell(sheet, 2, 4, 'дней пребывания', bold_style)
         set_cell(sheet, 2, 5, 'дней лечения', bold_style)
         set_cell(sheet, 2, 6, 'всего процедур', bold_style)
         set_cell(sheet, 2, 7, 'всего ед.', bold_style)

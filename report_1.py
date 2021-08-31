@@ -139,7 +139,7 @@ def create_report_on_day(sheet, cur, choice_date, start_num_str):
     key_places.sort()
     num_str += 3
     for name_place in key_places:
-        points = '…' * (50 - len(name_place))
+        points = '…' * 40
         set_cell(sheet, num_str, 1, name_place + points, style)
         set_cell(sheet, num_str, 3, all_places[name_place], bold_style)
         num_str += 1

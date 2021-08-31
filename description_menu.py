@@ -1,4 +1,4 @@
-import os, sqlite3, pyperclip, webbrowser
+import os, sqlite3, webbrowser
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
 import datetime

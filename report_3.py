@@ -3,18 +3,8 @@ from openpyxl.styles import Font, Alignment
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 
 from data.design.report_3 import Ui_MainWindow as Ui_Report3
-
-
-def set_cell(sheet, x, y, value, style, alignment=1):
-    cell = sheet._get_cell(x, y)
-    cell.value = value
-    cell.font = style
-    if alignment == 1:
-        cell.alignment = Alignment(horizontal='left')
-    elif alignment == 2:
-        cell.alignment = Alignment(horizontal='center')
-    elif alignment == 3:
-        cell.alignment = Alignment(horizontal='right')
+from report_5 import set_cell, color_light_gray
+from report_2 import get_detailed_report_month, border_t_b_bold, border_r_b, border_bottom, border_right
 
 
 def get_date_calendar(calendar):
@@ -28,6 +18,19 @@ def get_date_calendar(calendar):
         # проверка на то, что месяц записан одним символом
         date = f'{date.split(".")[0]}.0{".".join(date.split(".")[1:])}'
     return date
+
+
+all_month = {1: 'янв.', 2: 'февр.', 3: 'март', 4: 'апр.',
+             5: 'май', 6: 'июнь', 7: 'июль', 8: 'авг.',
+             9: 'сент.', 10: 'окт.', 11: 'нояб.', 12: 'дек.'}
+
+all_month_full = {'01': 'Январь', '02': 'Февраль', '03': 'Март', '04': 'Апрель',
+             '05': 'Май', '06': 'Июнь', '07': 'Июль', '08': 'Август',
+             '09': 'Сентябрь', '10': 'Октябрь', '11': 'Ноябрь', '12': 'Декабрь'}
+
+month_convert = {1: '01', 2: '02', 3: '03', 4: '04',
+             5: '05', 6: '06', 7: '07', 8: '08',
+             9: '09', 10: '10', 11: '11', 12: '12'}
 
 
 class ReportMenu3(QMainWindow, Ui_Report3):
@@ -84,11 +87,11 @@ class ReportMenu3(QMainWindow, Ui_Report3):
         bold_big_style = Font(size="14", bold=True)
         bold_style = Font(size="11", bold=True)
         style = Font(size="11")
-        pale_style = Font(size="11", color='00777777')
+        pale_style = Font(size="9", color='00555555', italic=True)
 
         # The data
         set_cell(sheet, 1, 1, 'Отчет за год работы кабинета реабилитации', bold_big_style)
-        set_cell(sheet, 1, 8, str(self.selected_year) + 'г.', bold_big_style)
+        set_cell(sheet, 1, 9, str(self.selected_year) + 'г.', bold_big_style)
 
 
         inquiry = f"""SELECT DISTINCT name FROM categories WHERE is_deleted = 0"""
@@ -97,8 +100,8 @@ class ReportMenu3(QMainWindow, Ui_Report3):
         inquiry = f"""SELECT DISTINCT name FROM departments WHERE is_deleted = 0"""
         all_departments = self.cur.execute(inquiry).fetchall()
 
-        inquiry = f"""SELECT DISTINCT name, price FROM places WHERE is_deleted = 0"""
-        all_places = self.cur.execute(inquiry).fetchall()
+        inquiry = f"""SELECT DISTINCT id, name, short_name, is_deleted FROM accounts"""
+        all_doctors = self.cur.execute(inquiry).fetchall()
 
         # ---------------------------------------катигории людей и их отделения
         inquiry = f"""SELECT records.id, patients.id FROM records, patients
@@ -117,124 +120,139 @@ class ReportMenu3(QMainWindow, Ui_Report3):
             inquiry = f"""SELECT records.id, records.date FROM records
             WHERE records.is_deleted = 0 and records.patient_id = {id_people}"""
             all_records = self.cur.execute(inquiry).fetchall()
-            if all(map(lambda x:
-                       int(x[1].split('.')[2]) >= self.selected_year,
-                       all_records)):
-                right_id_people.append(id_people)
+            is_right_people = True
+            min_month = 12
+            for record in all_records:
+                date = record[1].split('.')
+                if int(date[2]) < self.selected_year:
+                    is_right_people = False
+                    break
+                if int(date[1]) < min_month:
+                    min_month = int(date[1])
+            if is_right_people:
+                right_id_people.append([id_people, min_month])
 
         department_by_people = {}
         for department in all_departments:
-            department_by_people[department[0]] = 0
-        department_by_people['удал. отделения'] = 0
+            department_by_people[department[0]] = [0 for _ in range(12)]
+        department_by_people['удал. отделения'] = [0 for _ in range(12)]
 
         category_by_people = {}
         for categorie in all_categories:
-            category_by_people[categorie[0]] = 0
-        category_by_people['удал. категории'] = 0
+            category_by_people[categorie[0]] = [0 for _ in range(12)]
+        category_by_people['удал. категории'] = [0 for _ in range(12)]
 
-        for id_people in right_id_people:
+        for people in right_id_people:
+            id_people, min_month = people
             inquiry = f"""SELECT patients.id, departments.name, categories.name FROM patients, departments, categories
 WHERE patients.id = {id_people} and patients.category = categories.id and patients.department = departments.id and patients.is_deleted = 0"""
             department_categori = self.cur.execute(inquiry).fetchone()
             if department_categori[1] not in department_by_people:
-                department_by_people['удал. отделения'] += 1
+                department_by_people['удал. отделения'][min_month - 1] += 1
             else:
-                department_by_people[department_categori[1]] += 1
+                department_by_people[department_categori[1]][min_month - 1] += 1
             if department_categori[2] not in category_by_people:
-                category_by_people['удал. категории'] += 1
+                category_by_people['удал. категории'][min_month - 1] += 1
             else:
-                category_by_people[department_categori[2]] += 1
+                category_by_people[department_categori[2]][min_month - 1] += 1
 
-        set_cell(sheet, 3, 1, 'Всего человек', bold_style)
-        set_cell(sheet, 3, 4, len(right_id_people), bold_style)
-        if category_by_people['удал. категории'] != 0:
+
+        set_cell(sheet, 3, 4, 'год', bold_style, 2, border=border_r_b)
+        for i in range(1, 13):
+            set_cell(sheet, 3, 4 + i, all_month[i], style, 2, border=border_bottom)
+            set_cell(sheet, 4, 4 + i, len(list(filter(lambda x: x[1] == i, right_id_people))), bold_style, 2)
+        set_cell(sheet, 4, 1, 'Всего человек', bold_style)
+        set_cell(sheet, 4, 4, len(right_id_people), bold_style, 2, border=border_right)
+        if sum(category_by_people['удал. категории']) != 0:
             all_categories.append(['удал. категории'])
-        num_str = 3
+        num_str = 4
         for categorie in all_categories:
             num_str += 1
             set_cell(sheet, num_str, 1, categorie[0], style)
-            set_cell(sheet, num_str, 4, category_by_people[categorie[0]], style)
+            set_cell(sheet, num_str, 4, sum(category_by_people[categorie[0]]), bold_style, 2, border=border_right)
+            for i in range(12):
+                set_cell(sheet, num_str, 5 + i, category_by_people[categorie[0]][i], style, 2)
 
-        set_cell(sheet, num_str + 2, 1, 'По отделениям', bold_style)
-        if department_by_people['удал. отделения'] != 0:
+
+        set_cell(sheet, num_str + 2, 1, 'По отделениям', bold_style, border=border_right)
+        if sum(department_by_people['удал. отделения']) != 0:
             all_departments.append(['удал. отделения'])
-        num_str += 3
+
+        set_cell(sheet, num_str + 1, 4, '', style, border=border_right)
+        set_cell(sheet, num_str + 2, 4, '', style, border=border_right)
+        num_str += 2
         for department in all_departments:
             num_str += 1
             set_cell(sheet, num_str, 1, department[0], style)
-            set_cell(sheet, num_str, 4, department_by_people[department[0]], style)
+            set_cell(sheet, num_str, 4, sum(department_by_people[department[0]]), bold_style, 2, border=border_right)
+            for i in range(12):
+                set_cell(sheet, num_str, 5 + i, department_by_people[department[0]][i], style, 2)
         # ---------------------------------------------------------------------
 
         # ------------------------------------------------------- По процедурам
 
-        inquiry = f"""SELECT records.id, places.name, accounts.name FROM records, lessons, places, accounts, patients
-            WHERE records.date LIKE '%{self.selected_year}' and (lessons.id = records.lesson_id_1 or 
-                                                                  lessons.id = records.lesson_id_2 or
-                                                                  lessons.id = records.lesson_id_3) and
-            lessons.id_plase = places.id and lessons.id_doctor = accounts.id and records.is_deleted = 0 and patients.is_deleted = 0 and patients.id = records.patient_id"""
-        all_records = self.cur.execute(inquiry).fetchall()
+        text = f'Способ реабилитации за {self.selected_year} Год'
+        year = get_detailed_report_month(self.selected_year, self.cur, False, text, mod=1, is_year=True, all_doctors=all_doctors)
+        months = []
+        for i in range(1, 13):
+            date = month_convert[i]
+            text = f'Способ реабилитации за {all_month_full[date]}'
+            month = get_detailed_report_month(date, self.cur, True, text, mod=1, all_doctors=all_doctors)
+            months.append(month)
 
-        records_by_places = {}
-        doctors_by_places = {}
+        set_cell(sheet, num_str + 1, 4, '', style, border=border_right)
+        num_str += 2
+        set_cell(sheet, num_str, 1, 'По процедурам', bold_style)
+        set_cell(sheet, num_str + 1, 1, 'по единицам ', bold_style)
 
-        for place in all_places:
-            records_by_places[place[0]] = 0
-        records_by_places['удал. места'] = 0
+        set_cell(sheet, num_str, 4, year[1], bold_style, 2, border=border_right)
+        set_cell(sheet, num_str + 1, 4, year[2], bold_style, 2, border=border_right)
+        for i in range(12):
+            set_cell(sheet, num_str, 5 + i, months[i][1], style, 2)
+            set_cell(sheet, num_str + 1, 5 + i, months[i][2], style, 2)
 
-        inquiry = f"""SELECT DISTINCT name FROM accounts WHERE is_deleted = 0"""
-        all_doctors = self.cur.execute(inquiry).fetchall()
-        for doctor in all_doctors:
-            doctors_by_places[doctor[0]] = 0
-        inquiry = f"""SELECT DISTINCT name FROM accounts WHERE is_deleted = 1"""
-        all_doctors_del = self.cur.execute(inquiry).fetchall()
-        for doctor in all_doctors_del:
-            doctors_by_places[doctor[0]] = 0
-
-
-        for record in all_records:
-            if record[1] not in records_by_places:
-                records_by_places['удал. места'] += 1
-            else:
-                records_by_places[record[1]] += 1
-            doctors_by_places[record[2]] += 1
-
-        set_cell(sheet, num_str + 2, 1, 'По процедурам', bold_style)
-        set_cell(sheet, num_str + 4, 1, '        Способ реабилитации', bold_style)
-        set_cell(sheet, num_str + 4, 9, 'Исполнители', bold_style)
-        set_cell(sheet, num_str + 4, 5, '      еденицы', bold_style)
-        set_cell(sheet, num_str + 2, 3, 'всего:', style, alignment=3)
-        set_cell(sheet, num_str + 2, 4, len(all_records), style)
-
-        num_str += 4
-        sum_price = 0
-        if records_by_places['удал. места'] != 0:
-            all_places.append(['удал. места'])
-        for place in all_places:
+        num_str += 3
+        set_cell(sheet, num_str, 1, '* данные ниже - о количестве человек, рассчитаны другим методом в отличие от верхней части отчёта и поэтому не стоит их брать в расчёт (показывают количество разных людей за данный период)', pale_style)
+        lines = year[0]
+        for line in lines:
             num_str += 1
-            set_cell(sheet, num_str, 1, place[0], style)
-            set_cell(sheet, num_str, 4, records_by_places[place[0]], style)
-            if place[0] != 'удал. места':
-                set_cell(sheet, num_str, 5, f'* {place[1]} =', style)
-                set_cell(sheet, num_str, 6,
-                         place[1] * records_by_places[place[0]], style)
-                sum_price += place[1] * records_by_places[place[0]]
-        set_cell(sheet, num_str + 1, 5, 'всего:', style)
-        set_cell(sheet, num_str + 1, 6, sum_price, style)
+            for i in range(1, len(line) + 1):
+                call = line[i - 1]
+                set_cell(sheet, num_str, i, call.text, call.style, border=call.border, alignment=call.alignment)
 
-        num_str -= len(all_places)
+        num_str += 2
+        for month in months:
+            lines = month[0]
+            for line in lines:
+                num_str += 1
+                for i in range(1, len(line) + 1):
+                    call = line[i - 1]
+                    set_cell(sheet, num_str, i, call.text, call.style, border=call.border, alignment=call.alignment)
+            num_str += 1
+            for i in range(1, len(line) + 1):
+                set_cell(sheet, num_str, i, '', style, border=border_t_b_bold, fill=color_light_gray)
+
+        # ______________________________________________________________
+
+        num_str += 3
+        set_cell(sheet, num_str, 2, 'Исполнители', bold_style)
         for doctor in all_doctors:
-            if doctors_by_places[doctor[0]] != 0:
+            if doctor[3]:
+                continue
+            num_str += 1
+            set_cell(sheet, num_str, 1, doctor[1] + '…' * 40, style)
+            set_cell(sheet, num_str, 6, doctor[2], bold_style)
+        num_str += 1
+        set_cell(sheet, num_str, 2, 'Удалённые исполнители', bold_style)
+        for doctor in all_doctors:
+            if doctor[3]:
                 num_str += 1
-                set_cell(sheet, num_str, 8, doctor[0], style)
-                set_cell(sheet, num_str, 13, doctors_by_places[doctor[0]], style)
-        for doctor in all_doctors_del:
-            if doctors_by_places[doctor[0]] != 0:
-                num_str += 1
-                set_cell(sheet, num_str, 8, doctor[0], pale_style)
-                set_cell(sheet, num_str, 13, doctors_by_places[doctor[0]], pale_style)
+                set_cell(sheet, num_str, 1, doctor[1] + '…' * 40, style)
+                set_cell(sheet, num_str, 6, doctor[2], bold_style)
 
-        sheet.column_dimensions['D'].width = 5.5
-        sheet.column_dimensions['E'].width = 6
+
+        sheet.column_dimensions['E'].width = 5.5
+        sheet.column_dimensions['F'].width = 6
 
         sheet.sheet_properties.pageSetUpPr.fitToPage = True
         sheet.orientation = 'landscape'
