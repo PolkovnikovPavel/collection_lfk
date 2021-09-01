@@ -197,7 +197,7 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
         for i in range(1, 13):
             date = month_convert[i]
             text = f'Способ реабилитации за {all_month_full[date]}'
-            month = get_detailed_report_month(date, self.cur, True, text, mod=1, all_doctors=all_doctors)
+            month = get_detailed_report_month([date, self.selected_year], self.cur, True, text, mod=1, all_doctors=all_doctors)
             months.append(month)
 
         set_cell(sheet, num_str + 1, 4, '', style, border=border_right)

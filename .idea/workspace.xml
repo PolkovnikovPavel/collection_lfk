@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22b69eb3-011a-4d3c-9bbb-3b6f9615fab0" name="Default Changelist" comment="version 1.8 (&#10;* a unified format has been created for all reports&#10;* changed the report &quot;annual&quot; and &quot;monthly&quot; for the new pharmacy&#10;* minor bugs fixed&#10;* some changes)">
-      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+    <list default="true" id="22b69eb3-011a-4d3c-9bbb-3b6f9615fab0" name="Default Changelist" comment="fixed problem with older versions">
+      <change afterPath="$PROJECT_DIR$/old_version/all_versions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/description_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/description_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/test.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -404,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630427794955</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fixed problem with older versions">
+      <created>1630428739026</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1630428739026</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -482,7 +493,8 @@
     <MESSAGE value="added forgotten file &quot;viewing_old_patients.py&quot;" />
     <MESSAGE value="fixed little bugs" />
     <MESSAGE value="version 1.8 (&#10;* a unified format has been created for all reports&#10;* changed the report &quot;annual&quot; and &quot;monthly&quot; for the new pharmacy&#10;* minor bugs fixed&#10;* some changes)" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.8 (&#10;* a unified format has been created for all reports&#10;* changed the report &quot;annual&quot; and &quot;monthly&quot; for the new pharmacy&#10;* minor bugs fixed&#10;* some changes)" />
+    <MESSAGE value="fixed problem with older versions" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed problem with older versions" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/data/setings.png">

@@ -70,7 +70,7 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
     all_places = cur.execute(inquiry).fetchall()
 
     if is_month:
-        date = f'___{date}_____'
+        date = f'___{date[0]}.{date[1]}'
     elif is_year:
         date = f'%{date}'
 
@@ -223,7 +223,7 @@ class ReportMenu2(QMainWindow, Ui_Report2):
             if (date, num_date) not in self.all_dates:
                 self.all_dates.append((date, num_date))
 
-        self.all_dates.sort(key=lambda x: x[1][0] + x[1][1] * 13, reverse=True)
+        self.all_dates.sort(key=lambda x: int(x[1][0]) + int(x[1][1] * 12), reverse=True)
 
         self.selected_month = self.all_dates[0][1]
         for month in self.all_dates:
@@ -336,7 +336,7 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
         # ------------------------------------------------------- По процедурам
 
         num_str += 2
-        lines = get_detailed_report_month(self.selected_month[0], self.cur, main_text=f'Реабилитация за {all_month[self.selected_month[0]]}', all_doctors=all_doctors)
+        lines = get_detailed_report_month(self.selected_month, self.cur, main_text=f'Реабилитация за {all_month[self.selected_month[0]]}', all_doctors=all_doctors)
         for line in lines:
             num_str += 1
             for i in range(1, len(line) + 1):
