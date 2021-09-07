@@ -19,7 +19,7 @@ bold_big_style = Font(size="14", bold=True)
 bold_medium_style = Font(size="13", bold=True)
 bold_style = Font(size="11", bold=True)
 style = Font(size="11")
-pale_style = Font(size="11", color='00777777')
+pale_style = Font(size="9", color='00555555', italic=True)
 
 
 border_t_b = Border(bottom=Side(style='medium'),
@@ -335,7 +335,8 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
 
         # ------------------------------------------------------- По процедурам
 
-        num_str += 2
+        num_str += 3
+        set_cell(sheet, num_str, 1, '* данные таблице ниже о количестве человек рассчитаны другим методом (считаются все: и первичные и повторные) в отличие от верхней части отчёта (количество человек считается однократно,только первичные)и поэтому количество человек в таблице ниже при суммировании не совпадет с данными таблице выше.', pale_style)
         lines = get_detailed_report_month(self.selected_month, self.cur, main_text=f'Реабилитация за {all_month[self.selected_month[0]]}', all_doctors=all_doctors)
         for line in lines:
             num_str += 1
