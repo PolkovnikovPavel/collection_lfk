@@ -202,14 +202,35 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
 
         set_cell(sheet, num_str + 1, 4, '', style, border=border_right)
         num_str += 2
-        set_cell(sheet, num_str, 1, 'По процедурам', bold_style)
-        set_cell(sheet, num_str + 1, 1, 'по единицам ', bold_style)
 
+        set_cell(sheet, num_str, 1, 'По процедурам', bold_style)   # количество процедур
         set_cell(sheet, num_str, 4, year[1], bold_style, 2, border=border_right)
-        set_cell(sheet, num_str + 1, 4, year[2], bold_style, 2, border=border_right)
         for i in range(12):
-            set_cell(sheet, num_str, 5 + i, months[i][1], style, 2)
-            set_cell(sheet, num_str + 1, 5 + i, months[i][2], style, 2)
+            set_cell(sheet, num_str, 5 + i, months[i][1], bold_style, 2)
+        for i in year[3]:
+            num_str += 1
+            set_cell(sheet, num_str, 1, i, style)
+            set_cell(sheet, num_str, 4, year[3][i][0], style, 2, border=border_right)
+            for j in range(12):
+                if i not in months[j][3]:
+                    set_cell(sheet, num_str, 5 + j, 0, style, 2)
+                else:
+                    set_cell(sheet, num_str, 5 + j, months[j][3][i][0], style, 2)
+        num_str += 1
+
+        set_cell(sheet, num_str, 1, 'по единицам ', bold_style)   # всего единиц
+        set_cell(sheet, num_str, 4, year[2], bold_style, 2, border=border_right)
+        for i in range(12):
+            set_cell(sheet, num_str, 5 + i, months[i][2], bold_style, 2)
+        for i in year[3]:
+            num_str += 1
+            set_cell(sheet, num_str, 1, i, style)
+            set_cell(sheet, num_str, 4, year[3][i][1], style, 2, border=border_right)
+            for j in range(12):
+                if i not in months[j][3]:
+                    set_cell(sheet, num_str, 5 + j, 0, style, 2)
+                else:
+                    set_cell(sheet, num_str, 5 + j, months[j][3][i][1], style, 2)
 
         num_str += 3
         set_cell(sheet, num_str, 1, '* данные таблице ниже о количестве человек рассчитаны другим методом (считаются все: и первичные и повторные) в отличие от верхней части отчёта (количество человек считается однократно,только первичные)и поэтому количество человек в таблице ниже при суммировании не совпадет с данными таблице выше.', pale_style)

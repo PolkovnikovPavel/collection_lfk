@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22b69eb3-011a-4d3c-9bbb-3b6f9615fab0" name="Default Changelist" comment="fixed problem with months and other little bags">
+    <list default="true" id="22b69eb3-011a-4d3c-9bbb-3b6f9615fab0" name="Default Changelist" comment="fixed text in report">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/description_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/description_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_version/журнал лфк v-1.8.exe" beforeDir="false" afterPath="$PROJECT_DIR$/old_version/журнал лфк v-1.8.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/test.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +116,9 @@
       </list>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="996" />
     <option name="y" value="255" />
@@ -153,8 +158,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../blocker" />
-    <property name="restartRequiresConfirmation" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../auto_helper" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager" selected="Python.main">
@@ -421,7 +425,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630507600669</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fixed text in report">
+      <created>1631027311188</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1631027311188</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -489,7 +500,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="made program and added first report" />
@@ -511,7 +521,8 @@
     <MESSAGE value="version 1.8 (&#10;* a unified format has been created for all reports&#10;* changed the report &quot;annual&quot; and &quot;monthly&quot; for the new pharmacy&#10;* minor bugs fixed&#10;* some changes)" />
     <MESSAGE value="fixed problem with older versions" />
     <MESSAGE value="fixed problem with months and other little bags" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed problem with months and other little bags" />
+    <MESSAGE value="fixed text in report" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed text in report" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/data/setings.png">

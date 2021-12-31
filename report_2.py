@@ -68,16 +68,19 @@ def get_num_from_date(date):
 def get_detailed_report_month(date, cur, is_month=True, main_text='Способ реабилитации', all_doctors=None, mod=0, is_year=False):
     inquiry = f"""SELECT DISTINCT id, name, price FROM places WHERE is_deleted = 0"""
     all_places = cur.execute(inquiry).fetchall()
+    inquiry = f"""SELECT DISTINCT id, name FROM categories WHERE is_deleted = 0"""
+    all_categories = cur.execute(inquiry).fetchall()
+
 
     if is_month:
         date = f'___{date[0]}.{date[1]}'
     elif is_year:
         date = f'%{date}'
 
-    inquiry = f"""SELECT records.id, places.id, places.name, accounts.id, accounts.name, patients.id FROM records, lessons, places, accounts, patients
+    inquiry = f"""SELECT records.id, places.id, places.name, accounts.id, accounts.name, patients.id, categories.name, places.price FROM records, lessons, places, accounts, patients, categories
                 WHERE records.date LIKE '{date}' and (lessons.id = records.lesson_id_1 or 
-                                                                                lessons.id = records.lesson_id_2 or
-                                                                                lessons.id = records.lesson_id_3) and
+                                                      lessons.id = records.lesson_id_2 or
+                                                      lessons.id = records.lesson_id_3) and categories.id = patients.category and
                 lessons.id_plase = places.id and lessons.id_doctor = accounts.id and records.is_deleted = 0 and patients.is_deleted = 0 and patients.id = records.patient_id"""
     all_records = cur.execute(inquiry).fetchall()
 
@@ -100,6 +103,10 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
         doctors_by_places[doctor[0]] = vocabulary
         right_id_people_by_doctors[doctor[0]] = []
 
+    records_by_category = {}
+    for category in all_categories:
+        records_by_category[category[1]] = [0, 0]
+
     for record in all_records:
         if record[1] not in records_by_places:
             records_by_places['удал. места'] += 1
@@ -111,6 +118,17 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
             right_id_people.append(record[5])
         if record[5] not in right_id_people_by_doctors[record[3]]:
             right_id_people_by_doctors[record[3]].append(record[5])
+        if record[6] in records_by_category:
+            records_by_category[record[6]][0] += 1
+            records_by_category[record[6]][1] += record[7]
+        else:
+            if 'удал. категории' not in records_by_category:
+                records_by_category['удал. категории'] = [1, record[7]]
+            else:
+                records_by_category['удал. категории'][0] += 1
+                records_by_category['удал. категории'][1] += record[7]
+
+
 
     lines = []
     line = [Call(main_text, bold_style), Call(''), Call(''), Call(''), Call('пр.', bold_style, border_left), Call('еденицы', bold_style), Call('')]
@@ -147,8 +165,14 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
         for doctor in all_doctors:
             if doctor[3]:
                 continue
-            line.append(Call(doctors_by_places[doctor[0]][place[0]], border=border_left, alignment=2))
-            line.append(Call(doctors_by_places[doctor[0]][place[0]] * place[2], alignment=2))
+            count = doctors_by_places[doctor[0]][place[0]]
+            prise = count * place[2]
+            if count == 0:
+                count = '-'
+                prise = '-'
+
+            line.append(Call(count, border=border_left, alignment=2))
+            line.append(Call(prise, alignment=2))
             sums[i] += doctors_by_places[doctor[0]][place[0]]
             sums[i + 1] += doctors_by_places[doctor[0]][place[0]] * place[2]
             i += 2
@@ -162,6 +186,10 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
             del_doctors_sum_1 += doctors_by_places[doctor[0]][place[0]]
             del_doctors_sum_2 += doctors_by_places[doctor[0]][place[0]] * place[2]
         if len(del_doctors) > 0:
+            if del_doctors_doctor == 0:
+                del_doctors_doctor = '-'
+            if del_doctors_prise == 0:
+                del_doctors_prise = '-'
             line.append(Call(del_doctors_doctor, border=border_left, alignment=2))
             line.append(Call(del_doctors_prise, alignment=2))
             sums[i] += del_doctors_sum_1
@@ -195,7 +223,7 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
     if mod == 0:
         return lines
     elif mod == 1:
-        return lines, sum_1, sum_2
+        return lines, sum_1, sum_2, records_by_category
 
 
 
@@ -313,15 +341,33 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
             else:
                 category_by_people[department_categori[2]] += 1
 
-        set_cell(sheet, 3, 1, 'Всего человек', bold_style)
-        set_cell(sheet, 3, 4, len(right_id_people), bold_style)
+        lines, sum_1, sum_2, records_by_category = get_detailed_report_month(self.selected_month, self.cur,
+                                          main_text=f'Реабилитация за {all_month[self.selected_month[0]]}',
+                                          all_doctors=all_doctors, mod=1)
+
+        set_cell(sheet, 3, 1, 'По категориям', bold_style)
+        set_cell(sheet, 3, 4, 'человек', bold_style)
+        set_cell(sheet, 3, 6, 'процедур', bold_style, 2)
+        set_cell(sheet, 3, 7, 'ед.', bold_style, 2)
+        set_cell(sheet, 4, 1, 'Всего:', bold_style, border=border_bottom)
+        set_cell(sheet, 4, 2, '', style, border=border_bottom)
+        set_cell(sheet, 4, 3, '', style, border=border_r_b)
+        set_cell(sheet, 4, 5, '', style, border=border_bottom)
+
+        set_cell(sheet, 4, 4, len(right_id_people), bold_style, 2, border=border_bottom)
+        set_cell(sheet, 4, 6, sum_1, bold_style, 2, border=border_bottom)
+        set_cell(sheet, 4, 7, sum_2, bold_style, 2, border=border_bottom)
+
+
         if category_by_people['удал. категории'] != 0:
             all_categories.append(['удал. категории'])
-        num_str = 3
+        num_str = 4
         for categorie in all_categories:
             num_str += 1
             set_cell(sheet, num_str, 1, categorie[0], style)
-            set_cell(sheet, num_str, 4, category_by_people[categorie[0]], style)
+            set_cell(sheet, num_str, 4, category_by_people[categorie[0]], style, 2, border=border_left)
+            set_cell(sheet, num_str, 6, records_by_category[categorie[0]][0], style, 2)
+            set_cell(sheet, num_str, 7, records_by_category[categorie[0]][1], style, 2)
 
         set_cell(sheet, num_str + 2, 1, 'По отделениям', bold_style)
         if department_by_people['удал. отделения'] != 0:
@@ -337,7 +383,6 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
 
         num_str += 3
         set_cell(sheet, num_str, 1, '* данные таблице ниже о количестве человек рассчитаны другим методом (считаются все: и первичные и повторные) в отличие от верхней части отчёта (количество человек считается однократно,только первичные)и поэтому количество человек в таблице ниже при суммировании не совпадет с данными таблице выше.', pale_style)
-        lines = get_detailed_report_month(self.selected_month, self.cur, main_text=f'Реабилитация за {all_month[self.selected_month[0]]}', all_doctors=all_doctors)
         for line in lines:
             num_str += 1
             for i in range(1, len(line) + 1):
