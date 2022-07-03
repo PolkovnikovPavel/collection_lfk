@@ -94,7 +94,7 @@ class DataPatient(QMainWindow, Ui_FormDataPatient):
         department = list(filter(lambda x: x[1] == data_of_patient[7], self.all_departments))[0]
         self.text_department.setCurrentIndex(self.all_departments.index(department))
         self.text_diagnos.setCurrentText(str(data_of_patient[6]))
-        self.text_memo.setText(data_of_patient[8])
+        self.text_memo.setText(str(data_of_patient[8]))
         date = data_of_patient[10].split('.')
         self.choice_date_of_operation.setSelectedDate(QtCore.QDate(int(date[2]), int(date[1]), int(date[0])))
 

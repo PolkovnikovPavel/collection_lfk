@@ -25,7 +25,7 @@ class MemoMenu(QMainWindow, Ui_memo):
                             WHERE id = {id_patient}"""
         patient = self.cur.execute(inquiry).fetchone()
         self.name.setText(patient[0])
-        self.text.setText(patient[1])
+        self.text.setText(str(patient[1]))
 
     def closeEvent(self, event):
         if self.mod == 1:
@@ -33,7 +33,7 @@ class MemoMenu(QMainWindow, Ui_memo):
         new_text = self.text.toPlainText()
         inquiry = f"""SELECT DISTINCT memo FROM patients 
                                     WHERE id = {self.id_patient}"""
-        old_text = self.cur.execute(inquiry).fetchone()[0]
+        old_text = str(self.cur.execute(inquiry).fetchone()[0])
         if ''.join(old_text.split()) != ''.join(new_text.split()):
             description = f'memo_s;{old_text};{new_text};{self.id_patient}'
             create_history(self, description)

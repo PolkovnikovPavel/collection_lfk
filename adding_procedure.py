@@ -17,6 +17,9 @@ class MyComboBox(QtWidgets.QComboBox):
     def set_args(self, args):
         self.args = args
 
+    def wheelEvent(self, *args, **kwargs):
+        pass
+
 
 def create_places_combobox(lesson_id, cur, all_places, seve_chenging_place):
     places = MyComboBox()
@@ -29,10 +32,11 @@ def create_places_combobox(lesson_id, cur, all_places, seve_chenging_place):
 
 
     if id_plase[0] != 0:
-        inquiry = f"""SELECT DISTINCT short_name FROM places
+        inquiry = f"""SELECT DISTINCT short_name, name FROM places
                                 WHERE id = {id_plase[0]}"""
         rez = cur.execute(inquiry).fetchone()
         places.addItems([str(rez[0])])
+        places.setToolTip(f'<h2>{str(rez[1])}</h2>')
     else:
         places.addItems(['------'])
     places.addItems(all_places)
@@ -50,10 +54,11 @@ def create_doctors_combobox(lesson_id, cur, all_doctors, seve_chenging_doctor):
 
 
     if id_doctor[0] != 0:
-        inquiry = f"""SELECT DISTINCT short_name FROM accounts
+        inquiry = f"""SELECT DISTINCT short_name, name FROM accounts
                                 WHERE id = {id_doctor[0]}"""
         rez = cur.execute(inquiry).fetchone()
         doctors.addItems([str(rez[0])])
+        doctors.setToolTip(f'<h2>{str(rez[1])}</h2>')
     else:
         doctors.addItems(['------'])
     doctors.addItems(all_doctors)
@@ -300,7 +305,7 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
 
         inquiry = f"""SELECT DISTINCT memo, diagnosis, date_of_operation FROM patients WHERE id = {patient_id}"""
         memo_of_patient = self.cur.execute(inquiry).fetchone()
-        description = memo_of_patient[0]
+        description = str(memo_of_patient[0])
         rez_description = ' '.join(description.split())[:39]
         if len(' '.join(description.split())) > 39:
             rez_description += '...'

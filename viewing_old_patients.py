@@ -148,7 +148,7 @@ class ViewingProcedures(QMainWindow, Ui_FormAddingProcedures):
         inquiry = f"""SELECT DISTINCT id, date, number_of_exercises, grade_1, 
                     grade_2, grade_3, is_deleted, lesson_id_1, lesson_id_2, lesson_id_3
                                                             FROM records
-                                                    WHERE patient_id = {patient_id}"""
+                                                    WHERE patient_id = {patient_id} AND is_deleted = 0"""
         all_records = self.cur.execute(inquiry).fetchall()
         all_records = all_records[::-1]
 

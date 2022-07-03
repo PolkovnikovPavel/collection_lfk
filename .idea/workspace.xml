@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22b69eb3-011a-4d3c-9bbb-3b6f9615fab0" name="Default Changelist" comment="fixed text in report">
+    <list default="true" id="22b69eb3-011a-4d3c-9bbb-3b6f9615fab0" name="Default Changelist" comment="version 1.8.2 (&#10;* в отчёт &quot;годовой&quot; и &quot;месячный&quot; добавлено отображение соколько было процедур в каждой категории людей&#10;* исправлены мелкие ошибки)">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/design/report_6.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/design/report_6.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/old_version/описание 1.9.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/report_6.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adding_procedure.py" beforeDir="false" afterPath="$PROJECT_DIR$/adding_procedure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_main_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_main_menu.ui" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_main_menu.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_of_patient.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_of_patient.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/description_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/description_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/memo.py" beforeDir="false" afterPath="$PROJECT_DIR$/memo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/test.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewing_old_patients.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewing_old_patients.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,10 +168,36 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../auto_helper" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\python\programs\collection_lfk" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="adding_procedure" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="collection_lfk" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/adding_procedure.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python">
       <module name="collection_lfk" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -175,27 +210,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="mini_game" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="collection_lfk" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../all_web/16_bot/lesson_2" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../all_web/16_bot/lesson_2/mini_game.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -225,7 +239,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="report_4" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="report_6" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="collection_lfk" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -233,11 +247,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/design" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/design/report_4.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/report_6.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -269,11 +283,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.report_6" />
         <item itemvalue="Python.temp" />
+        <item itemvalue="Python.adding_procedure" />
         <item itemvalue="Python.report_2" />
-        <item itemvalue="Python.report_4" />
-        <item itemvalue="Python.mini_game" />
       </list>
     </recent_temporary>
   </component>

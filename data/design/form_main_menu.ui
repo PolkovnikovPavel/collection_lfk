@@ -211,7 +211,7 @@
      </font>
     </property>
     <property name="text">
-     <string>отчёт на период дней</string>
+     <string>Отчёт на период дней</string>
     </property>
    </widget>
    <widget class="QPushButton" name="report_3">
@@ -234,7 +234,7 @@
      <string>Отчёт за год</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="report_6">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -245,13 +245,13 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>15</pointsize>
       <italic>false</italic>
       <kerning>true</kerning>
      </font>
     </property>
     <property name="text">
-     <string>действие 9</string>
+     <string>Отчёт по категориям</string>
     </property>
    </widget>
    <widget class="QPushButton" name="report_5">
@@ -271,7 +271,7 @@
      </font>
     </property>
     <property name="text">
-     <string>сборный отчёт</string>
+     <string>Сборный отчёт</string>
     </property>
    </widget>
    <widget class="QPushButton" name="report_2">
@@ -319,7 +319,7 @@
      <x>0</x>
      <y>0</y>
      <width>616</width>
-     <height>18</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
