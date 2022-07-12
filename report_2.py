@@ -62,7 +62,7 @@ def get_datetime_date(day, month, year):
 
 def get_num_from_date(date):
     d, m, y = date.split('.')
-    return int(m) * 32 + int(y) * 385 + int(d)
+    return int(m) * 31 + int(y) * 385 + int(d)
 
 
 def get_detailed_report_month(date, cur, is_month=True, main_text='Способ реабилитации', all_doctors=None, mod=0, is_year=False):

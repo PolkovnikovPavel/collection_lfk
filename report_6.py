@@ -19,6 +19,7 @@ bold_big_style = Font(size="14", bold=True)
 bold_style = Font(size="11", bold=True)
 style = Font(size="11")
 little_style = Font(size="7")
+pale_style = Font(size="9", color='00555555', italic=True)
 
 all_month = {'01': 'Январь', '02': 'Февраль', '03': 'Март', '04': 'Апрель',
              '05': 'Май', '06': 'Июнь', '07': 'Июль', '08': 'Август',
@@ -173,10 +174,6 @@ class ReportMenu6(QMainWindow, Ui_Report6):
             book = openpyxl.Workbook()
             sheet = book.active
 
-        if self.radio_all.isChecked():
-            rule_patients = ''
-        else:
-            rule_patients = 'AND is_discharge = 1'
         is_year = self.radio_year.isChecked()
         right_year = self.all_dates[self.selected_period.currentIndex()][1][1]
         if not is_year:
@@ -197,11 +194,22 @@ class ReportMenu6(QMainWindow, Ui_Report6):
             set_cell(sheet, 1, 3, f'За {self.selected_period.currentText()} год', bold_big_style)
         else:
             set_cell(sheet, 1, 3, f'За {self.selected_period.currentText()}', bold_big_style)
-        set_cell(sheet, 2, 1, '! данные о количестве процедур и усл.ед. беруться не по указанному промежутку времени, а по пациенту, у которого была операция в заданном промежутке (из-за этого данные могут несходиться с данными из других отчётов)', little_style)
+        if self.radio_all.isChecked():
+            rule_patients = ''
 
-        inquiry = f"""SELECT DISTINCT * FROM patients
-                            WHERE is_deleted = 0 {rule_patients} {self.get_text_rule_of_category()} AND date_of_operation LIKE '%{right_year}'"""
-        all_patients = self.cur.execute(inquiry).fetchall()
+            set_cell(sheet, 2, 1, '* данные о количестве процедур и усл.ед. беруться не по указанному промежутку времени, а по пациенту, у которого была дата запись в заданном промежутке (из-за этого данные могут несходиться с данными из других отчётов)', pale_style)
+            inquiry = f"""SELECT DISTINCT * FROM patients
+                   WHERE is_deleted = 0 {rule_patients} {self.get_text_rule_of_category()} AND date_of_operation LIKE '%{right_year}'"""
+            all_patients = self.cur.execute(inquiry).fetchall()
+
+        else:
+            rule_patients = 'AND is_discharge = 1'
+
+            set_cell(sheet, 2, 1, '* данные о количестве процедур и усл.ед. беруться не по указанному промежутку времени, а по пациенту, у которого была дата выписки в заданном промежутке (из-за этого данные могут несходиться с данными из других отчётов)', pale_style)
+            inquiry = f"""SELECT DISTINCT * FROM patients
+                               WHERE is_deleted = 0 {rule_patients} {self.get_text_rule_of_category()} AND date_of_discharge LIKE '%{right_year}'"""
+            all_patients = self.cur.execute(inquiry).fetchall()
+
         num_str = 4
         all_patients.sort(key=lambda x: x[1])
 

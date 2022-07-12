@@ -41,16 +41,22 @@ abc = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 
-def set_cell(sheet, x, y, value, style, alignment=1, fill=None, border=None):
+def set_cell(sheet, x, y, value, style, alignment=1, fill=None, border=None, v_alignment=1, wrap_text=False):
     cell = sheet._get_cell(x, y)
     cell.value = value
     cell.font = style
+    if v_alignment == 1:
+        v_alignment = 'top'
+    elif v_alignment == 2:
+        v_alignment = 'center'
+    else:
+        v_alignment = 'bottom'
     if alignment == 1:
-        cell.alignment = Alignment(horizontal='left')
+        cell.alignment = Alignment(horizontal='left', vertical=v_alignment, wrap_text=wrap_text)
     elif alignment == 2:
-        cell.alignment = Alignment(horizontal='center')
+        cell.alignment = Alignment(horizontal='center', vertical=v_alignment, wrap_text=wrap_text)
     elif alignment == 3:
-        cell.alignment = Alignment(horizontal='right')
+        cell.alignment = Alignment(horizontal='right', vertical=v_alignment, wrap_text=wrap_text)
     if fill is not None:
         cell.fill = fill
     if border is not None:

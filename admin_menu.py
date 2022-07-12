@@ -1,4 +1,5 @@
 import os, sqlite3
+import numpy as np
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -26,7 +27,21 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         self.con = sqlite3.connect(db_name)
         self.cur = self.con.cursor()
 
+        self.prepare_db()
+
         self.create_places()
+
+
+    def prepare_db(self):
+        inquiry = f"""PRAGMA table_info(accounts) """
+        table_info = np.array(self.cur.execute(inquiry).fetchall())
+        if 'load_rate' in table_info[:, 1]:
+            return
+        inquiry = f"""ALTER TABLE accounts
+  ADD load_rate INTEGER NOT NULL DEFAULT 30;"""
+
+        self.cur.execute(inquiry)
+        self.con.commit()
 
 
     def create_new_user(self):
@@ -45,13 +60,14 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
             self.main_table.removeRow(0)
 
         self.main_table.setRowCount(len(names))
-        self.main_table.setColumnCount(5)
+        self.main_table.setColumnCount(6)
         self.main_table.setColumnWidth(0, 120)
         self.main_table.setColumnWidth(1, 105)
         self.main_table.setColumnWidth(2, 240)
         self.main_table.setColumnWidth(3, 100)
         self.main_table.setColumnWidth(4, 105)
-        self.main_table.setHorizontalHeaderLabels(['', '', 'полное имя', 'короткое', 'пароль'])
+        self.main_table.setColumnWidth(5, 200)
+        self.main_table.setHorizontalHeaderLabels(['', '', 'полное имя', 'короткое', 'пароль', 'норма ед/день'])
 
         for i in range(len(names)):
             button_1 = MyPushButton(self.centralwidget)
@@ -91,21 +107,26 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
             short_name = QtWidgets.QLineEdit(str(names[i][1]))
             short_name.setFont(font)
 
-            inquiry = f"""SELECT DISTINCT password FROM accounts
+            inquiry = f"""SELECT DISTINCT password, load_rate FROM accounts
                                         WHERE name = '{names[i][0]}'"""
-            password = self.cur.execute(inquiry).fetchone()[0]
-            password = QtWidgets.QLineEdit(str(password))
+            data = self.cur.execute(inquiry).fetchone()
+            password = QtWidgets.QLineEdit(str(data[0]))
             password.setFont(font)
+
+            load_rate = QtWidgets.QLineEdit(str(data[1]))
+            load_rate.setFont(font)
 
             self.main_table.setCellWidget(i, 0, button_1)
             self.main_table.setCellWidget(i, 1, button_2)
             self.main_table.setCellWidget(i, 2, name)
             self.main_table.setCellWidget(i, 3, short_name)
             self.main_table.setCellWidget(i, 4, password)
+            self.main_table.setCellWidget(i, 5, load_rate)
 
         self.button_add.clicked.disconnect()
         self.button_add.clicked.connect(self.add_new_user)
         self.new_name.setText('')
+        self.resizeEvent(None)
 
     def create_places(self):
         self.name_category.setText('Способ реабилитации')
@@ -409,13 +430,20 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         call_name = self.main_table.cellWidget(self.sender().args[1], 2)
         call_short_name = self.main_table.cellWidget(self.sender().args[1], 3)
         call_pass = self.main_table.cellWidget(self.sender().args[1], 4)
+        load_rate = self.main_table.cellWidget(self.sender().args[1], 5)
 
-        if call_name.text() in list(filter(lambda x: x != call_name.text(), self.all_users)):
+        if self.all_users.count(call_name.text()) > 1:
+            self.create_new_user()
+            return
+        try:
+            load_rate = int(load_rate.text())
+        except Exception:
             self.create_new_user()
             return
 
+
         inquiry = f"""UPDATE accounts
-                        SET name = '{call_name.text()}', password = '{call_pass.text()}', short_name = '{call_short_name.text()}'
+    SET name = '{call_name.text()}', password = '{call_pass.text()}', short_name = '{call_short_name.text()}', load_rate = {load_rate}
                             WHERE name = '{self.sender().args[0]}'"""
         self.cur.execute(inquiry)
         self.con.commit()

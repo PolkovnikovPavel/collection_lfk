@@ -2,6 +2,7 @@ import os, sqlite3, datetime
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from history import create_history
 from PyQt5 import QtCore, QtGui, QtWidgets
+from report_7 import get_num_from_date
 
 from data.design.form_discharge_of_patients import Ui_MainWindow as Ui_FormDischarge
 
@@ -54,11 +55,16 @@ class DischargeMenu(QMainWindow, Ui_FormDischarge):
 
         patient = list(filter(lambda x: x[0] == self.patient, self.all_patients))[0]
 
+        inquiry = f"""SELECT DISTINCT date_of_operation FROM patients
+                                    WHERE id = {patient[1]}"""
+        date_of_operation = self.cur.execute(inquiry).fetchone()[0]
+        if get_num_from_date(date_of_operation) > get_num_from_date(date_of_discharge):
+            return
+
         inquiry = f"""UPDATE patients SET is_discharge = 1, date_of_discharge = '{date_of_discharge}'
                             WHERE id = {patient[1]}"""
         self.cur.execute(inquiry)
         self.con.commit()
-
 
         create_history(self, f'discharge;{patient[1]}')
 

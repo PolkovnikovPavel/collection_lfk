@@ -15,6 +15,7 @@ from report_3 import ReportMenu3
 from report_4 import ReportMenu4
 from report_5 import ReportMenu5
 from report_6 import ReportMenu6
+from report_7 import ReportMenu7
 
 
 def get_date_calendar(calendar):
@@ -50,6 +51,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.report_4.clicked.connect(self.open_report_4)
         self.report_5.clicked.connect(self.create_report_5)
         self.report_6.clicked.connect(self.create_report_6)
+        self.report_7.clicked.connect(self.create_report_7)
         self.button_add_procedure.clicked.connect(self.open_adding_procedure)
         self.name.setText(self.ac_name)
         self.con = sqlite3.connect(db_name)
@@ -60,6 +62,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         is_admin = self.cur.execute(inquiry).fetchone()[0]
         if not is_admin:
             self.admin_button.hide()
+            # self.report_7.hide()
 
     def open_admin_menu(self):
         self.admin_window = AdminMenu(self, self.ac_name, self.db_name)
@@ -123,6 +126,11 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
 
     def create_report_6(self):
         self.report_window = ReportMenu6(self, self.ac_name, self.db_name)
+        # self.close()
+        self.report_window.show()
+
+    def create_report_7(self):
+        self.report_window = ReportMenu7(self, self.ac_name, self.db_name)
         # self.close()
         self.report_window.show()
 
