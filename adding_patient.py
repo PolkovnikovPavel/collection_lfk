@@ -87,10 +87,16 @@ class AddingMenu(QMainWindow, Ui_FormAddingPatient):
 
         inquiry = f"""INSERT INTO patients (full_name, date_of_birth, 
 story_number, category, is_discharge, diagnosis, department, memo, date_of_operation, my_story_number) 
-                                    VALUES ('{self.text_full_name.text()}', 
-                                    '{date_of_birth}', {story_number}, 
-                                    {category}, 0, '{diagnosis}', {department}, 
-                                    '{memo}', '{date_of_operation}', {story_number_my})"""
+         VALUES ('{" ".join(self.text_full_name.text().split())}', 
+                 '{date_of_birth}',
+                  {story_number},
+                  {category},
+                  0,
+                  '{diagnosis}',
+                   {department}, 
+                  '{memo}',
+                  '{date_of_operation}',
+                   {story_number_my})"""
         self.cur.execute(inquiry).fetchall()
         self.con.commit()
 

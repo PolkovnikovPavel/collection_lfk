@@ -49,7 +49,7 @@ class DataPatient(QMainWindow, Ui_FormDataPatient):
         all_patients.sort(key=lambda x: str(x[0]))
         self.all_patients = []
         for patient in all_patients:
-            text = f'{patient[0]} -{patient[4]}- ({patient[2]}) {patient[1]}'
+            text = f'{" ".join(patient[0].split())} -{patient[4]}- ({patient[2]}) {patient[1]}'
             self.name_patient.addItem(text)
             self.all_patients.append((text, patient[3]))
             if patient[3] == self.selected_patient:
@@ -123,7 +123,7 @@ class DataPatient(QMainWindow, Ui_FormDataPatient):
         old_data_patient = self.cur.execute(inquiry).fetchone()
 
         inquiry = f"""UPDATE patients
-                SET full_name = '{self.text_full_name.text()}',
+                SET full_name = '{" ".join(self.text_full_name.text().split())}',
             date_of_birth = '{date_of_birth}', 
             story_number = {story_number},
             category = {category},

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a44b364-3b90-4545-95e1-234d54968051" name="Changes" comment="">
+    <list default="true" id="8a44b364-3b90-4545-95e1-234d54968051" name="Changes" comment="version 1.10 (&#10;* добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк&#10;* исправлена возвомность поставить дату выписки меньше чем дата операции&#10;* изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции&#10;* создан новый отчёт (7-й о нагрузке):&#10;* * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически&#10;* * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца&#10;&#10;-------)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adding_patient.py" beforeDir="false" afterPath="$PROJECT_DIR$/adding_patient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adding_procedure.py" beforeDir="false" afterPath="$PROJECT_DIR$/adding_procedure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_of_patient.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_of_patient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/description_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/description_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewing_old_patients.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewing_old_patients.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,10 +166,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../auto_helper" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "370006",
+    "last_opened_file_path": "C:/Users/python/programs/collection_lfk",
+    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\python\programs\collection_lfk" />
@@ -311,7 +320,7 @@
     <option name="ACTIVE_ACTIONS" value=",SHOW_INHERITED" />
   </component>
   <component name="SvnConfiguration">
-    <configuration>C:\Users\Павел\AppData\Roaming\Subversion</configuration>
+    <configuration>C:\Users\pavel\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -475,7 +484,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657647276684</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="version 1.10 (&#10;* добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк&#10;* исправлена возвомность поставить дату выписки меньше чем дата операции&#10;* изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции&#10;* создан новый отчёт (7-й о нагрузке):&#10;* * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически&#10;* * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца&#10;&#10;-------)">
+      <created>1657648024029</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1657648024029</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -567,7 +583,8 @@
     <MESSAGE value="fixed text in report" />
     <MESSAGE value="version 1.7 (&#10;* добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк&#10;* исправлена возвомность поставить дату выписки меньше чем дата операции&#10;* изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции&#10;* создан новый отчёт (7-й о нагрузке):&#10;* * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически&#10;* * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца&#10;&#10;-------)" />
     <MESSAGE value="fixup! version 1.10 ( * добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк * исправлена возвомность поставить дату выписки меньше чем дата операции * изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции * создан новый отчёт (7-й о нагрузке): * * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически * * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixup! version 1.10 ( * добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк * исправлена возвомность поставить дату выписки меньше чем дата операции * изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции * создан новый отчёт (7-й о нагрузке): * * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически * * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца" />
+    <MESSAGE value="version 1.10 (&#10;* добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк&#10;* исправлена возвомность поставить дату выписки меньше чем дата операции&#10;* изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции&#10;* создан новый отчёт (7-й о нагрузке):&#10;* * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически&#10;* * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца&#10;&#10;-------)" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.10 (&#10;* добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк&#10;* исправлена возвомность поставить дату выписки меньше чем дата операции&#10;* изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции&#10;* создан новый отчёт (7-й о нагрузке):&#10;* * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически&#10;* * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца&#10;&#10;-------)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/data/setings.png">

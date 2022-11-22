@@ -6,7 +6,7 @@ import datetime
 from data.design.description_menu import Ui_MainWindow as Ui_Description_menu
 
 
-text = '''                           Журнал ЛФК (v - 1.9)
+text = '''                           Журнал ЛФК (v - 1.10.1)
 
 Данная программа предназначена для:
 * Упрощения передачи информации о приверженности пациента.

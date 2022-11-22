@@ -131,7 +131,7 @@ class AddingProcedures(QMainWindow, Ui_FormAddingProcedures):
         all_patients.sort(key=lambda x: str(x[0]))
         self.all_patients = []
         for patient in all_patients:
-            text = f'{patient[0]} -{patient[4]}- ({patient[2]}) {patient[1]}'
+            text = f'{" ".join(patient[0].split())} -{patient[4]}- ({patient[2]}) {patient[1]}'
             self.name_patient.addItem(text)
             self.all_patients.append((text, patient[3]))
         self.choiced_date()
