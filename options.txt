@@ -1,1 +1,1 @@
-C:/Users/pavel/Desktop/журнал ЛФК/lfk.db
+C:/Users/pavel/Desktop/журнал ЛФК/lfk_work.db

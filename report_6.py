@@ -260,6 +260,9 @@ class ReportMenu6(QMainWindow, Ui_Report6):
             set_cell(sheet, num_str, 4, str(global_sum_price), bold_style, 2)
             num_str += 3
 
+        num_str += 2
+        set_cell(sheet, num_str, 1, f'* Данный отчёт составлен с помощью программы "Журнал ЛФК" версии {version}',
+                 pale_style)
 
         sheet.column_dimensions['A'].width = 11
         sheet.column_dimensions['B'].width = 50

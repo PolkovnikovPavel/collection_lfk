@@ -4,12 +4,14 @@ from openpyxl.styles.borders import Border, Side
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from PyQt5.QtWidgets import QGridLayout, QProgressBar, QWidget, QCheckBox
 from PyQt5 import QtGui, QtCore
+from description_menu import version
 
 from data.design.report_5 import Ui_MainWindow as Ui_Report5
 
 bold_big_style = Font(size="14", bold=True)
 bold_style = Font(size="11", bold=True)
 style = Font(size="11")
+pale_style = Font(size="9", color='00555555', italic=True)
 
 green_fill = PatternFill(start_color='FF66CC33', fill_type='solid')
 yellow_fill = PatternFill(start_color='FFFFFF33', fill_type='solid')
@@ -315,6 +317,9 @@ places.id = {place[0]} and accounts.id = lessons.id_doctor"""
                     cell.border = border_r_l_b_thick
                 else:
                     cell.border = border_r_l_thick
+
+        num_str += 2
+        set_cell(sheet, num_str, 1, f'* Данный отчёт составлен с помощью программы "Журнал ЛФК" версии {version}', pale_style)
 
         for symbol_1 in abc[0:5]:
             for symbol_2 in abc[1:]:

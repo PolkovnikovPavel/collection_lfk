@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
 from data.design.report_3 import Ui_MainWindow as Ui_Report3
 from report_5 import set_cell, color_light_gray
 from report_2 import get_detailed_report_month, border_t_b_bold, border_r_b, border_bottom, border_right
-
+from description_menu import version
 
 def get_date_calendar(calendar):
     # возращает выбраную дату в отформатированном виде(дд.мм.гггг)
@@ -270,7 +270,8 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
                 num_str += 1
                 set_cell(sheet, num_str, 1, doctor[1] + '…' * 40, style)
                 set_cell(sheet, num_str, 6, doctor[2], bold_style)
-
+        num_str += 2
+        set_cell(sheet, num_str, 1, f'* Данный отчёт составлен с помощью программы "Журнал ЛФК" версии {version}', pale_style)
 
         sheet.column_dimensions['E'].width = 5.5
         sheet.column_dimensions['F'].width = 6

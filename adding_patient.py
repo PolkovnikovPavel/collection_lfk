@@ -7,13 +7,11 @@ from data.design.form_adding_patient import Ui_MainWindow as Ui_FormAddingPatien
 
 
 def get_date(date):
-    # возращает выбраную дату в отформатированном виде(дд.мм.гггг)
+    ''' Возвращает выбранную дату в отформатированном виде (дд.мм.гггг) '''
     date = f'{date.day()}.{date.month()}.{date.year()}'
     if len(date.split('.')[0]) == 1:
-        # проверка на то, что день записан одним символом
         date = f'0{date}'
     if len(date.split('.')[1]) == 1:
-        # проверка на то, что месяц записан одним символом
         date = f'{date.split(".")[0]}.0{".".join(date.split(".")[1:])}'
     return date
 

@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 from data.design.report_2 import Ui_MainWindow as Ui_Report2
 from report_5 import set_cell, color_light_gray
-
+from description_menu import version
 
 
 all_month = {'01': 'Январь', '02': 'Февраль', '03': 'Март', '04': 'Апрель',
@@ -89,9 +89,18 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
     right_id_people = []
     right_id_people_by_doctors = {}
 
+    right_id_people_by_records = {}
+    right_id_people_by_records_by_doc = {}
+
+
+
     for place in all_places:
         records_by_places[place[0]] = 0
+        right_id_people_by_records[place[0]] = set()
+        right_id_people_by_records_by_doc[place[0]] = {}
     records_by_places['удал. места'] = 0
+    right_id_people_by_records['удал. места'] = set()
+    right_id_people_by_records_by_doc['удал. места'] = {}
 
     if all_doctors is None:
         inquiry = f"""SELECT DISTINCT id, name, short_name, is_deleted FROM accounts"""
@@ -100,6 +109,7 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
         vocabulary = {}
         for i in records_by_places:
             vocabulary[i] = 0
+            right_id_people_by_records_by_doc[i][doctor[0]] = set()
         doctors_by_places[doctor[0]] = vocabulary
         right_id_people_by_doctors[doctor[0]] = []
 
@@ -111,9 +121,14 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
         if record[1] not in records_by_places:
             records_by_places['удал. места'] += 1
             doctors_by_places[record[3]]['удал. места'] += 1
+            right_id_people_by_records['удал. места'].add(record[5])
+            right_id_people_by_records_by_doc['удал. места'][record[3]].add(record[5])
         else:
             records_by_places[record[1]] += 1
             doctors_by_places[record[3]][record[1]] += 1
+            right_id_people_by_records[record[1]].add(record[5])
+            right_id_people_by_records_by_doc[record[1]][record[3]].add(record[5])
+
         if record[5] not in right_id_people:
             right_id_people.append(record[5])
         if record[5] not in right_id_people_by_doctors[record[3]]:
@@ -131,20 +146,22 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
 
 
     lines = []
-    line = [Call(main_text, bold_style), Call(''), Call(''), Call(''), Call('пр.', bold_style, border_left), Call('еденицы', bold_style), Call('')]
-    line2 = [Call(''), Call(''), Call(''), Call(''), Call('', style, border_left), Call(''), Call('')]
+    line = [Call(main_text, bold_style), Call(''), Call(''), Call(''), Call('чел.', bold_style, border_left), Call('пр.', bold_style), Call('еденицы', bold_style), Call('')]
+    line2 = [Call(''), Call(''), Call(''), Call(''), Call('', style, border_left), Call(''), Call(''), Call('')]
     del_doctors = []
     for doctor in all_doctors:
         if doctor[3]:
             del_doctors.append(doctor)
             continue
-        line.append(Call(doctor[2], bold_medium_style, border_left, 3))
+        line.append(Call('', border=border_left))
+        line.append(Call(doctor[2], bold_medium_style, alignment=2))
         line.append(Call(''))
-        line2.extend([Call('пр.', border=border_left, alignment=2), Call('ед.', alignment=2)])
+        line2.extend([Call('чел.', border=border_left, alignment=2), Call('пр.', alignment=2), Call('ед.', alignment=2)])
     if len(del_doctors) > 0:
-        line.append(Call('Удал. исполнители', bold_style, border_left))
+        line.append(Call('', border=border_left))
+        line.append(Call('Удал. исполнители', alignment=border_left))
         line.append(Call(''))
-        line2.extend([Call('пр.', border=border_left, alignment=2), Call('ед.', alignment=2)])
+        line2.extend([Call('чел.', border=border_left, alignment=2), Call('пр.', alignment=2), Call('ед.', alignment=2)])
 
     lines.append(line)
     lines.append(line2)
@@ -157,7 +174,8 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
         sums = [0 for _ in range(len(all_doctors) * 2)]
     for place in all_places:
         summ = records_by_places[place[0]] * place[2]
-        line = [Call(place[1]), Call(''), Call(''), Call(''), Call(records_by_places[place[0]], style, border_left, 3),
+        line = [Call(place[1]), Call(''), Call(''), Call(''), Call(len(right_id_people_by_records[place[0]]), style, border_left, 3),
+                Call(records_by_places[place[0]], style, alignment=3),
                 Call(f'* {place[2]} =', style, border_left, 2), Call(summ)]
         sum_1 += records_by_places[place[0]]
         sum_2 += summ
@@ -165,58 +183,68 @@ def get_detailed_report_month(date, cur, is_month=True, main_text='Способ 
         for doctor in all_doctors:
             if doctor[3]:
                 continue
+            human = len(right_id_people_by_records_by_doc[place[0]][doctor[0]])
             count = doctors_by_places[doctor[0]][place[0]]
             prise = count * place[2]
             if count == 0:
                 count = '-'
                 prise = '-'
+                human = '-'
 
-            line.append(Call(count, border=border_left, alignment=2))
+            line.append(Call(human, border=border_left, alignment=2))
+            line.append(Call(count, alignment=2))
             line.append(Call(prise, alignment=2))
             sums[i] += doctors_by_places[doctor[0]][place[0]]
             sums[i + 1] += doctors_by_places[doctor[0]][place[0]] * place[2]
             i += 2
+        del_doctors_human = 0
         del_doctors_doctor = 0
         del_doctors_prise = 0
         del_doctors_sum_1 = 0
         del_doctors_sum_2 = 0
         for doctor in del_doctors:
+            del_doctors_human += len(right_id_people_by_records_by_doc[place[0]][doctor[0]])
             del_doctors_doctor += doctors_by_places[doctor[0]][place[0]]
             del_doctors_prise += doctors_by_places[doctor[0]][place[0]] * place[2]
             del_doctors_sum_1 += doctors_by_places[doctor[0]][place[0]]
             del_doctors_sum_2 += doctors_by_places[doctor[0]][place[0]] * place[2]
         if len(del_doctors) > 0:
+            if del_doctors_human == 0:
+                del_doctors_human = '-'
             if del_doctors_doctor == 0:
                 del_doctors_doctor = '-'
             if del_doctors_prise == 0:
                 del_doctors_prise = '-'
-            line.append(Call(del_doctors_doctor, border=border_left, alignment=2))
+            line.append(Call(del_doctors_human, border=border_left, alignment=2))
+            line.append(Call(del_doctors_doctor, alignment=2))
             line.append(Call(del_doctors_prise, alignment=2))
             sums[i] += del_doctors_sum_1
             sums[i + 1] += del_doctors_sum_2
 
         lines.append(line)
 
-    line = [Call(''), Call(''), Call('всего:', bold_style), Call(''), Call(sum_1, bold_style, border_left, 3), Call('', style, border_left), Call(sum_2, bold_style)]
-    for i in range(0, len(sums), 2):
-        line.append(Call(sums[i], bold_style, border_left, 2))
-        line.append(Call(sums[i + 1], bold_style, alignment=2))
-    lines.append(line)
-    line = [Call('всего человек:', bold_style, border_t_b), Call('', style, border_t_b), Call(len(right_id_people), bold_style, border_t_b)]
-    line.append(Call('', style, border_t_b))
-    line.append(Call('', style, border_t_b))
-    line.append(Call('', style, border_t_b))
-    line.append(Call('', style, border_t_b))
+    line = [Call(''), Call(''), Call('всего:', bold_style), Call(''), Call(len(right_id_people), bold_style, border_left, 3),
+            Call(sum_1, bold_style, None, 3), Call('', style, border_left), Call(sum_2, bold_style)]
 
     del_doctor_count = 0
+    j = 0
     for i in right_id_people_by_doctors:
         if any(map(lambda x: x[0] == i, del_doctors)):
             del_doctor_count += len(right_id_people_by_doctors[i])
             continue
-        line.append(Call(len(right_id_people_by_doctors[i]), bold_style, border_t_b, 3))
-        line.append(Call('', style, border_t_b))
+        line.append(Call(len(right_id_people_by_doctors[i]), bold_style, border_left, 2))
+        line.append(Call(sums[j], bold_style, alignment=2))
+        line.append(Call(sums[j + 1], bold_style, alignment=2))
+        j += 2
     if len(del_doctors) != 0:
-        line.append(Call(del_doctor_count, bold_style, border_t_b, 3))
+        line.append(Call(del_doctor_count, bold_style, border_left, 2))
+        line.append(Call(sums[j], bold_style, alignment=2))
+        line.append(Call(sums[j + 1], bold_style, alignment=2))
+    lines.append(line)
+
+
+    line = []
+    for _ in range(8 + 3 * (len(sums) // 2)):
         line.append(Call('', style, border_t_b))
     lines.append(line)
 
@@ -423,9 +451,8 @@ WHERE patients.id = {id_people} and patients.category = categories.id and patien
                 num_str += 1
                 set_cell(sheet, num_str, 1, doctor[1] + '…' * 40, style)
                 set_cell(sheet, num_str, 6, doctor[2], bold_style)
-
-
-
+        num_str += 2
+        set_cell(sheet, num_str, 1, f'* Данный отчёт составлен с помощью программы "Журнал ЛФК" версии {version}', pale_style)
 
         sheet.column_dimensions['D'].width = 5.5
         sheet.column_dimensions['E'].width = 6

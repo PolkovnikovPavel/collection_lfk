@@ -4,6 +4,7 @@ from openpyxl.styles.borders import Border, Side
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog, QCheckBox, QWidget, QSpinBox
 from PyQt5 import QtCore, QtGui
 from dateutil.relativedelta import relativedelta
+from description_menu import version
 
 from data.design.report_7 import Ui_MainWindow as Ui_Report7
 from report_5 import set_cell, color_light_gray
@@ -354,6 +355,8 @@ class ReportMenu7(QMainWindow, Ui_Report7):
                     set_cell(sheet, num_str, 5, str(load_rate), style, 2)
             num_str += 2
 
+        num_str += 2
+        set_cell(sheet, num_str, 1, f'* Данный отчёт составлен с помощью программы "Журнал ЛФК" версии {version}', pale_style)
 
         sheet.column_dimensions['A'].width = 11
         sheet.column_dimensions['B'].width = 35
