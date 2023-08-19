@@ -5,7 +5,7 @@ import datetime
 
 from data.design.description_menu import Ui_MainWindow as Ui_Description_menu
 
-version = '1.11.1'
+version = '1.11.2'
 
 text = f'''                           Журнал ЛФК (v - {version})
 

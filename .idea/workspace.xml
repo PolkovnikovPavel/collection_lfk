@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a44b364-3b90-4545-95e1-234d54968051" name="Changes" comment="version 1.10.1 (* исправлена одна незначительная проблема связанная с &quot;\n&quot; в имени пациентов --&gt; теперь это обрабатывается перед визуальным отображением, и не позволяет ставить больше отступов, чем один пробел в ФИО пациента при его создание&#10;-------&#10;чтоб исправить уже существующий недочёт (наличие &quot;\n&quot; в ФИО), надо открыть редактор с этим пациентом и нажать кнопку сохранить)">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="8a44b364-3b90-4545-95e1-234d54968051" name="Changes" comment="version 1.11.1 (&#10;* в ежемесячный и ежегодный отчёт добавлена информация о том, со сколькими людьми поработал каждый врач&#10;* Добавлена в каждый отчёт (кроме ежедневного) подпись о том, что он сделан в этой программе в &quot;такой-то версии&quot;&#10;* Теперь можно посмотреть текущую версию в меню &quot;о проекте&quot;&#10;* в коде некоторые изменения для большей &quot;единости&quot; стиля&#10;-------&#10;)">
+      <change afterPath="$PROJECT_DIR$/backup_copies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adding_patient.py" beforeDir="false" afterPath="$PROJECT_DIR$/adding_patient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/lfk.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/lfk.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adding_procedure.py" beforeDir="false" afterPath="$PROJECT_DIR$/adding_procedure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/admin_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_account_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_account_login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_account_login.ui" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_account_login.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_admin_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_admin_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_admin_menu.ui" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_admin_menu.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_main_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/design/form_main_menu.ui" beforeDir="false" afterPath="$PROJECT_DIR$/data/design/form_main_menu.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/description_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/description_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/options.txt" beforeDir="false" afterPath="$PROJECT_DIR$/options.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_6.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_6.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_7.py" beforeDir="false" afterPath="$PROJECT_DIR$/report_7.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login_in_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/login_in_system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/test.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -180,7 +181,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Project.color&quot;: &quot;370006&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/python/programs/collection_lfk&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/python/programs/auto_helper&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;
   }
 }</component>
@@ -211,6 +212,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="backup_copies" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="collection_lfk" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backup_copies.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python">
       <module name="collection_lfk" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -224,27 +246,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="report_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="collection_lfk" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/report_2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -318,11 +319,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.backup_copies" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.report_6" />
         <item itemvalue="Python.temp" />
         <item itemvalue="Python.adding_procedure" />
-        <item itemvalue="Python.report_2" />
       </list>
     </recent_temporary>
   </component>
@@ -509,7 +510,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669120562018</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="version 1.11.1 (&#10;* в ежемесячный и ежегодный отчёт добавлена информация о том, со сколькими людьми поработал каждый врач&#10;* Добавлена в каждый отчёт (кроме ежедневного) подпись о том, что он сделан в этой программе в &quot;такой-то версии&quot;&#10;* Теперь можно посмотреть текущую версию в меню &quot;о проекте&quot;&#10;* в коде некоторые изменения для большей &quot;единости&quot; стиля&#10;-------&#10;)">
+      <created>1691589318462</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1691589318462</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -603,7 +611,8 @@
     <MESSAGE value="fixup! version 1.10 ( * добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк * исправлена возвомность поставить дату выписки меньше чем дата операции * изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции * создан новый отчёт (7-й о нагрузке): * * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически * * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца" />
     <MESSAGE value="version 1.10 (&#10;* добавлена поддержка в функцие set_cell не только горизонтальной центровки, но и вертикальной, а так же возможность переноса строк&#10;* исправлена возвомность поставить дату выписки меньше чем дата операции&#10;* изменён принцеп поиска пациентов в 6-ом отчёте (по категориям), теперь преимущественно поиск ведётся по дате выписки, а не по дате операции&#10;* создан новый отчёт (7-й о нагрузке):&#10;* * добавлена возможность редактировать количество рабочих дней в 7-ом очёте (ко категориям), при этом предворительно расчитывается автоматически&#10;* * в этом же отчёте исправлена ошибка с выбором даты, из за чего всё крашилось при выборе дат в середине месяца&#10;&#10;-------)" />
     <MESSAGE value="version 1.10.1 (* исправлена одна незначительная проблема связанная с &quot;\n&quot; в имени пациентов --&gt; теперь это обрабатывается перед визуальным отображением, и не позволяет ставить больше отступов, чем один пробел в ФИО пациента при его создание&#10;-------&#10;чтоб исправить уже существующий недочёт (наличие &quot;\n&quot; в ФИО), надо открыть редактор с этим пациентом и нажать кнопку сохранить)" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.10.1 (* исправлена одна незначительная проблема связанная с &quot;\n&quot; в имени пациентов --&gt; теперь это обрабатывается перед визуальным отображением, и не позволяет ставить больше отступов, чем один пробел в ФИО пациента при его создание&#10;-------&#10;чтоб исправить уже существующий недочёт (наличие &quot;\n&quot; в ФИО), надо открыть редактор с этим пациентом и нажать кнопку сохранить)" />
+    <MESSAGE value="version 1.11.1 (&#10;* в ежемесячный и ежегодный отчёт добавлена информация о том, со сколькими людьми поработал каждый врач&#10;* Добавлена в каждый отчёт (кроме ежедневного) подпись о том, что он сделан в этой программе в &quot;такой-то версии&quot;&#10;* Теперь можно посмотреть текущую версию в меню &quot;о проекте&quot;&#10;* в коде некоторые изменения для большей &quot;единости&quot; стиля&#10;-------&#10;)" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.11.1 (&#10;* в ежемесячный и ежегодный отчёт добавлена информация о том, со сколькими людьми поработал каждый врач&#10;* Добавлена в каждый отчёт (кроме ежедневного) подпись о том, что он сделан в этой программе в &quot;такой-то версии&quot;&#10;* Теперь можно посмотреть текущую версию в меню &quot;о проекте&quot;&#10;* в коде некоторые изменения для большей &quot;единости&quot; стиля&#10;-------&#10;)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -614,8 +623,9 @@
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/description_menu.py</url>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/admin_menu.py</url>
+          <line>262</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

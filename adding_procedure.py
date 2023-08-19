@@ -528,7 +528,7 @@ VALUES ({patient_id}, '{date}', {self.evaluation_1}, {self.evaluation_2}, {self.
 
         if self.choice_record_id != record_id:
             result = QtWidgets.QMessageBox.question(self, "Вопрос",
-                        "Точно изменить?", QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                        'Точно изменить?\nЕсли появилось это окно, значит вы нажали НЕ НА ТУ кнопку "Измен"\n', QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
                                                     QtWidgets.QMessageBox.No)
             if result != QtWidgets.QMessageBox.Yes:
                 return

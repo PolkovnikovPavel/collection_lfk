@@ -1,6 +1,7 @@
-import os, sqlite3
+import os, sqlite3, subprocess
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
+from backup_copies import get_appdata_folder
 from data.design.form_account_login import Ui_FormAccountLogin
 from main_menu import *
 
@@ -10,10 +11,14 @@ class LoggingInSystem(QMainWindow, Ui_FormAccountLogin):
         super().__init__()
         self.setupUi(self)
         self.is_db = False
+        self.is_backup = False
         self.check()
+        # if self.is_db:
+        #     self.check_correct()
 
         self.button_db.clicked.connect(self.open_db)
         self.button_enter_accaunt.clicked.connect(self.enter_to_accaunt)
+        self.button_oben_backups.clicked.connect(self.open_folder_backups)
         self.password.setFocus()
 
     def enter_to_accaunt(self):  # вызывается при нажатии на кнопку "Войти"
@@ -23,13 +28,12 @@ class LoggingInSystem(QMainWindow, Ui_FormAccountLogin):
 
             inquiry = f"""SELECT DISTINCT password FROM accounts
                                 WHERE name = '{name}'"""
-            cur = self.con.cursor()  # этот запрос получает всех пользователей
+            cur = self.con.cursor()
             right_pas = cur.execute(inquiry).fetchone()
             if str(right_pas[0]) == pas:
                 self.open_main_menu(name)
             else:
                 self.text_error.setText('Не верный пароль')
-
 
     def check(self):
         if os.path.isfile('options.txt'):
@@ -80,6 +84,8 @@ class LoggingInSystem(QMainWindow, Ui_FormAccountLogin):
                 file.write(fname)
             self.open_self()
 
+    def open_folder_backups(self):
+        subprocess.run(['explorer', get_appdata_folder()], shell=True)
 
     def open_main_menu(self, name):
         self.password.setText('')

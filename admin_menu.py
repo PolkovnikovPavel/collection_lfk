@@ -1,9 +1,10 @@
 import os, sqlite3
 import numpy as np
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from data.design.form_admin_menu import Ui_FormMainMenu as Ui_FormAdminMenu
+from backup_copies import get_all_backups, get_full_path, create_new_backup, choose_another_backup, recover
 
 
 class MyPushButton(QtWidgets.QPushButton):
@@ -23,7 +24,9 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         self.categories_button.clicked.connect(self.create_categories)
         self.departments_button.clicked.connect(self.create_departments)
         self.new_doktor_button.clicked.connect(self.create_new_user)
+        self.backup_button.clicked.connect(self.create_recovery)
         self.button_add.clicked.connect(self.add_new_place)
+        self.db_name = db_name
         self.con = sqlite3.connect(db_name)
         self.cur = self.con.cursor()
 
@@ -38,7 +41,7 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         if 'load_rate' in table_info[:, 1]:
             return
         inquiry = f"""ALTER TABLE accounts
-  ADD load_rate INTEGER NOT NULL DEFAULT 30;"""
+    ADD load_rate INTEGER NOT NULL DEFAULT 30;"""
 
         self.cur.execute(inquiry)
         self.con.commit()
@@ -315,6 +318,68 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
         self.button_add.clicked.connect(self.add_new_department)
         self.new_name.setText('')
 
+    def create_recovery(self):
+        self.name_category.setText('Восстановление')
+
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        _translate = QtCore.QCoreApplication.translate
+
+        names = get_all_backups()
+        names.sort(key=lambda x: int(x.split('_')[0]), reverse=True)
+
+        for i in range(self.main_table.rowCount()):
+            self.main_table.removeRow(0)
+
+        self.main_table.setRowCount(len(names))
+        self.main_table.setColumnCount(5)
+        self.main_table.setColumnWidth(0, 150)
+        self.main_table.setColumnWidth(1, 105)
+        self.main_table.setColumnWidth(2, 10)
+        self.main_table.setColumnWidth(3, 130)
+        self.main_table.setColumnWidth(4, 120)
+        self.main_table.setHorizontalHeaderLabels(['', '', '№', 'Дата', 'Размер'])
+
+        for i in range(len(names)):
+            button_1 = MyPushButton(self.centralwidget)
+            button_1.setFont(font)
+            button_1.set_args((names[i], i))
+            button_1.setText(_translate("MainWindow", "Предпросмотр"))
+            button_1.setToolTip('Предпросмотр - это значит, что программа откроется в новой сессии как бы с другой базой данных, но при этом сама база никуда не денется.\nПолезно когда надо только посмотреть что будет если сдлеть полное востановление к выбранному сохранению')
+            button_1.clicked.connect(self.preview_backup)
+            button_1.setStyleSheet("background-color: #6CED73")
+
+            button_2 = MyPushButton(self.centralwidget)
+            button_2.setFont(font)
+            button_2.set_args((names[i], i))
+            button_2.setText(_translate("MainWindow", "Заменить"))
+            button_2.setToolTip('Замена - это восстановление, то есть текущая база данных будет УДАЛЕНА, а вместо неё встанет выбраное сохранение под тем же именем, которое было раньше.\nБудет полезно если всё совсем плохо')
+
+            button_2.clicked.connect(self.replace_recovery)
+            button_2.setStyleSheet("background-color: #A350DC")
+
+
+            num = names[i].split('_')[0]
+            date = '.'.join(names[i].split('_')[1].split('-'))
+            size = os.path.getsize(get_full_path(names[i]))
+
+            num = QtWidgets.QLineEdit(num)
+            num.setFont(font)
+            date = QtWidgets.QLineEdit(date)
+            date.setFont(font)
+            size = QtWidgets.QLineEdit(str(size))
+            size.setFont(font)
+
+            self.main_table.setCellWidget(i, 0, button_1)
+            self.main_table.setCellWidget(i, 1, button_2)
+            self.main_table.setCellWidget(i, 2, num)
+            self.main_table.setCellWidget(i, 3, date)
+            self.main_table.setCellWidget(i, 4, size)
+
+        self.button_add.clicked.disconnect()
+        self.button_add.clicked.connect(self.add_new_backup)
+        self.new_name.setText('')
+
     def del_place(self):
         name = self.sender().args[0]
         inquiry = f"""UPDATE places
@@ -501,6 +566,26 @@ class AdminMenu(QMainWindow, Ui_FormAdminMenu):
                 self.create_new_user()
         else:
             return
+
+    def add_new_backup(self):
+        text = self.new_name.text()
+        if len(self.new_name.text().split()) == 0:
+            create_new_backup(self.db_name)
+        else:
+            create_new_backup(self.db_name, text)
+        self.create_recovery()
+
+    def preview_backup(self):
+        choose_another_backup(self.sender().args[0], self.main_menu)
+
+    def replace_recovery(self):
+        response = QMessageBox.warning(self, "Предупреждение ", f'Это действие безвозвратно УДАЛИТ текущую базу данных, заменив её копией "{self.sender().args[0]}".\n\nПродолжать?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if response == QMessageBox.No:
+            print('User clicked No')
+            return
+        recover(self.sender().args[0], self.main_menu)
+
 
     def open_main_menu(self):
         self.close()  # закрывает это окно

@@ -230,6 +230,39 @@
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="button_oben_backups">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>490</y>
+      <width>341</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#EEEEEE</string>
+    </property>
+    <property name="text">
+     <string extracomment="Настроеить базу данных">Открыть папку резервных копий</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -237,7 +270,7 @@
      <x>0</x>
      <y>0</y>
      <width>363</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

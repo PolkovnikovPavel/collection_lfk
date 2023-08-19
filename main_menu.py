@@ -1,6 +1,7 @@
 import os, sqlite3
-from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 
+from backup_copies import come_back_from_backup, create_new_backup, check_correct_db
 from data.design.form_main_menu import Ui_MainWindow as Ui_FormMainMenu
 from admin_menu import AdminMenu
 from adding_patient import AddingMenu
@@ -39,6 +40,7 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.db_name = db_name
         self.setupUi(self)
         self.exit_button.clicked.connect(self.open_login)
+        self.exit_preview_button.clicked.connect(self.exit_preview)
         self.admin_button.clicked.connect(self.open_admin_menu)
         self.add_patient_button.clicked.connect(self.open_adding_menu)
         self.button_viewing_procedure.clicked.connect(self.open_viewing_procedure)
@@ -62,7 +64,18 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         is_admin = self.cur.execute(inquiry).fetchone()[0]
         if not is_admin:
             self.admin_button.hide()
-            # self.report_7.hide()
+            self.report_7.hide()
+
+        if not self.login_in_system.is_backup:
+            self.exit_preview_button.hide()
+        else:
+            self.exit_preview_button.show()
+
+        create_new_backup(self.db_name)
+        if check_correct_db(self.con) != 0:
+            QMessageBox.warning(self, "Предупреждение ",
+                                f'Автоматическая проверка показала, что в базе данных есть ошибки... Возможны потери данных. Пользоваться программой по прежнему можно\n\nАвтовостановления в этой версии нет. (Рекомендуем сохранить прошлую копию базы, когда ошибки небыло)',
+                                QMessageBox.Ok, QMessageBox.Ok)
 
     def open_admin_menu(self):
         self.admin_window = AdminMenu(self, self.ac_name, self.db_name)
@@ -98,6 +111,9 @@ class MainMenu(QMainWindow, Ui_FormMainMenu):
         self.description_window = DescriptionMenu(self, self.ac_name, self.db_name)
         # self.close()
         self.description_window.show()
+
+    def exit_preview(self):
+        come_back_from_backup(self)
 
     def open_report_1(self):
         self.report_window = ReportMenu1(self, self.ac_name, self.db_name)

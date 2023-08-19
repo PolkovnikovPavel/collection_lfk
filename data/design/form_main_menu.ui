@@ -331,6 +331,24 @@
 нагрузке</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="exit_preview_button">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>310</y>
+      <width>421</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Выйти из предпросмотра</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -338,7 +356,7 @@
      <x>0</x>
      <y>0</y>
      <width>616</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
